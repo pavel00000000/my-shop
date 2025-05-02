@@ -2,18 +2,76 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
 
+// Список категорий с мета-данными
+const categories = [
+  {
+    path: '/catalog/all',
+    name: 'Загальний роздiл',
+    title: 'Переглянути всі подарунки та букети в Києві',
+  },
+  {
+    path: '/catalog/category1',
+    name: 'Бокси',
+    title: 'Подарункові бокси з доставкою в Києві',
+  },
+  {
+    path: '/catalog/category2',
+    name: 'Дитячі букети',
+    title: 'Дитячі букети для свят у Києві',
+  },
+  {
+    path: '/catalog/category3',
+    name: 'Чоловічі букети, коробки',
+    title: 'Чоловічі букети та подарункові коробки в Києві',
+  },
+  {
+    path: '/catalog/category4',
+    name: 'Солодкі букети, коробки',
+    title: 'Солодкі букети та коробки з доставкою в Києві',
+  },
+  {
+    path: '/catalog/category5',
+    name: 'Сухофрукти, фрукти',
+    title: 'Подарункові набори із сухофруктів та фруктів у Києві',
+  },
+  {
+    path: '/catalog/category6',
+    name: 'Полуниця в шоколаді',
+    title: 'Полуниця в шоколаді з доставкою в Києві',
+  },
+  {
+    path: '/catalog/category8',
+    name: 'Квіти',
+    title: 'Свіжі квіти та букети з доставкою в Києві',
+  },
+];
+
 const Navigation = () => {
+  // Функция для отправки события при клике на категорию
+  const handleCategoryClick = (categoryName) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'select_content',
+      content_type: 'category',
+      content_id: categoryName,
+    });
+    console.log('Navigation.js: Клик по категории:', categoryName); // Для отладки
+  };
+
   return (
     <nav className="navigation" data-testid="navigation">
       <ul>
-        <li><Link to="/catalog/all">Загальний роздiл</Link></li>
-        <li><Link to="/catalog/category1">Бокси</Link></li>
-        <li><Link to="/catalog/category2">Дитячі букети</Link></li>
-        <li><Link to="/catalog/category3">Чоловічі букети, коробки</Link></li>
-        <li><Link to="/catalog/category4">Солодкі букети, коробки</Link></li>
-        <li><Link to="/catalog/category5">Сухофрукти, фрукти</Link></li>
-        <li><Link to="/catalog/category6">Полуниця в шоколаді</Link></li>
-        <li><Link to="/catalog/category8">Квіти</Link></li>
+        {categories.map((category) => (
+          <li key={category.path}>
+            <Link
+              to={category.path}
+              title={category.title}
+              onClick={() => handleCategoryClick(category.name)}
+            >
+              {category.name}
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );

@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /cart
+Sitemap: https://my-shop-7mpy.onrender.com/sitemap.xml

@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ReactGA from 'react-ga4';
+
+// Инициализация Google Analytics 4
+ReactGA.initialize('G-XXXXXXXXXX'); // Замените на ваш Measurement ID
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +15,13 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Отправка данных производительности в аналитику
+reportWebVitals((metric) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'web_vitals',
+    name: metric.name,
+    value: metric.value,
+    id: metric.id,
+  });
+});

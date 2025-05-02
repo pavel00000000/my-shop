@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { CartContext } from '../context/CartContext';
 import Confetti from 'react-confetti';
 import './Cart.css';
@@ -51,7 +52,7 @@ const CitySelect = ({ onSelect }) => {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Введите город"
+        placeholder="Введіть місто"
         className="form-input"
       />
       {cities.length > 0 && (
@@ -121,7 +122,7 @@ const WarehouseSelect = ({ cityRef, onSelect }) => {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Введите отделение"
+        placeholder="Введіть відділення"
         className="form-input"
       />
       {warehouses.length > 0 && (
@@ -155,8 +156,28 @@ const Cart = () => {
   const [copyMessage, setCopyMessage] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Отслеживание просмотра корзины
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'view_cart',
+        ecommerce: {
+          currency: 'UAH',
+          value: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+          items: cartItems.map((item) => ({
+            item_id: item.id,
+            item_name: item.composition,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
+    }
+  }, [cartItems]);
+
   if (!context) {
-    return <p>Ошибка: Контекст корзины не найден.</p>;
+    return <p>Помилка: Контекст кошика не знайдено.</p>;
   }
 
   const handleInputChange = (e) => {
@@ -166,13 +187,16 @@ const Cart = () => {
 
   const copyToClipboard = (text) => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
-        setCopyMessage('Скопировано!');
-        setTimeout(() => setCopyMessage(''), 2000);
-      }).catch((err) => {
-        console.error('Ошибка копирования:', err);
-        setCopyMessage('Ошибка копирования');
-      });
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          setCopyMessage('Скопійовано!');
+          setTimeout(() => setCopyMessage(''), 2000);
+        })
+        .catch((err) => {
+          console.error('Помилка копіювання:', err);
+          setCopyMessage('Помилка копіювання');
+        });
     } else {
       const textarea = document.createElement('textarea');
       textarea.value = text;
@@ -180,11 +204,11 @@ const Cart = () => {
       textarea.select();
       try {
         document.execCommand('copy');
-        setCopyMessage('Скопировано!');
+        setCopyMessage('Скопійовано!');
         setTimeout(() => setCopyMessage(''), 2000);
       } catch (err) {
-        console.error('Ошибка копирования:', err);
-        setCopyMessage('Ошибка копирования');
+        console.error('Помилка копіювання:', err);
+        setCopyMessage('Помилка копіювання');
       }
       document.body.removeChild(textarea);
     }
@@ -194,14 +218,31 @@ const Cart = () => {
     setIsSubmitting(true);
     setSubmitMessage('');
 
+    // Событие начала оформления заказа
+    if (cartItems.length > 0) {
+      window.dataLayer.push({
+        event: 'begin_checkout',
+        ecommerce: {
+          currency: 'UAH',
+          value: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+          items: cartItems.map((item) => ({
+            item_id: item.id,
+            item_name: item.composition,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
+    }
+
     if (!cartItems || cartItems.length === 0) {
-      setSubmitMessage('Ошибка: Корзина пуста');
+      setSubmitMessage('Помилка: Кошик порожній');
       setIsSubmitting(false);
       return;
     }
 
     if (!formData.paymentMethod) {
-      setSubmitMessage('Ошибка: Выберите способ оплаты');
+      setSubmitMessage('Помилка: Виберіть спосіб оплати');
       setIsSubmitting(false);
       return;
     }
@@ -209,7 +250,7 @@ const Cart = () => {
     let deliveryData = {};
     if (formData.deliveryMethod === 'nova-poshta') {
       if (!selectedCity || !selectedWarehouse) {
-        setSubmitMessage('Ошибка: Выберите город и отделение');
+        setSubmitMessage('Помилка: Виберіть місто та відділення');
         setIsSubmitting(false);
         return;
       }
@@ -221,18 +262,18 @@ const Cart = () => {
       };
     } else if (formData.deliveryMethod === 'courier') {
       if (!formData.address) {
-        setSubmitMessage('Ошибка: Укажите адрес доставки');
+        setSubmitMessage('Помилка: Вкажіть адресу доставки');
         setIsSubmitting(false);
         return;
       }
       deliveryData = { address: formData.address };
     } else if (formData.deliveryMethod === 'self-pickup') {
       if (!formData.name || !formData.phone) {
-        setSubmitMessage('Ошибка: Укажите имя и номер телефона');
+        setSubmitMessage('Помилка: Вкажіть ім’я та номер телефону');
         setIsSubmitting(false);
         return;
       }
-      deliveryData = { pickupAddress: 'Самовывоз, город Кропивницкий' };
+      deliveryData = { pickupAddress: 'Самовивіз, місто Кропивницький' };
     }
 
     try {
@@ -252,23 +293,47 @@ const Cart = () => {
 
       const data = await response.json();
       if (response.ok) {
-        const successMessage = 'Спасибо за заказ. Ваш заказ принят в обработку.';
+        const successMessage = 'Дякуємо за замовлення. Ваше замовлення прийнято в обробку.';
         setSubmitMessage(successMessage);
         setShowConfetti(true);
+
+        // Событие покупки
+        window.dataLayer.push({
+          event: 'purchase',
+          ecommerce: {
+            transaction_id: data.orderId || `TX${Date.now()}`, // Уникальный ID заказа
+            value: totalPrice + (formData.deliveryMethod === 'nova-poshta' ? 80 : 0),
+            currency: 'UAH',
+            items: cartItems.map((item) => ({
+              item_id: item.id,
+              item_name: item.composition,
+              price: item.price,
+              quantity: item.quantity,
+            })),
+          },
+        });
+
         setTimeout(() => {
           setShowConfetti(false);
           setSubmitMessage('');
         }, 5000);
         clearCart();
-        setFormData({ name: '', phone: '', deliveryMethod: 'nova-poshta', address: '', comment: '', paymentMethod: 'privatbank' });
+        setFormData({
+          name: '',
+          phone: '',
+          deliveryMethod: 'nova-poshta',
+          address: '',
+          comment: '',
+          paymentMethod: 'privatbank',
+        });
         setSelectedCity(null);
         setSelectedWarehouse(null);
       } else {
-        setSubmitMessage(`Ошибка: ${data.error || 'Не удалось отправить заказ'}`);
+        setSubmitMessage(`Помилка: ${data.error || 'Не вдалося відправити замовлення'}`);
       }
     } catch (error) {
-      console.error('Ошибка при отправке заказа:', error.message);
-      setSubmitMessage('Ошибка при отправке заказа. Попробуйте позже.');
+      console.error('Помилка при відправці замовлення:', error.message);
+      setSubmitMessage('Помилка при відправці замовлення. Спробуйте пізніше.');
     } finally {
       setIsSubmitting(false);
     }
@@ -282,8 +347,48 @@ const Cart = () => {
   const prepayment = formData.deliveryMethod === 'nova-poshta' ? totalPrice * 0.4 : 0;
   const totalWithDelivery = totalPrice + deliveryCost;
 
+  // Структурированные данные для корзины
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Order',
+    orderStatus: 'http://schema.org/OrderProcessing',
+    merchant: {
+      '@type': 'Organization',
+      name: 'My Shop',
+    },
+    potentialAction: {
+      '@type': 'OrderAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://my-shop-7mpy.onrender.com/cart',
+        inLanguage: 'uk',
+      },
+      name: 'Оформити замовлення',
+    },
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      price: totalWithDelivery,
+      priceCurrency: 'UAH',
+    },
+  };
+
   return (
     <div className="cart-wrapper">
+      <Helmet>
+        <title>Кошик | Оформити Замовлення в Києві | My Shop</title>
+        <meta
+          name="description"
+          content="Оформіть замовлення солодких букетів, подарункових боксів та квітів у Києві. Швидка доставка!"
+        />
+        <meta
+          name="keywords"
+          content="оформити замовлення київ, заказать подарки киев, кошик подарунків, корзина киев"
+        />
+        <meta name="robots" content="noindex, follow" />
+        <meta name="language" content="uk" />
+        <link rel="canonical" href="https://my-shop-7mpy.onrender.com/cart" />
+        <script type="application/ld+json">{JSON.stringify(schema)}</script>
+      </Helmet>
       <div className="cart-container">
         {showConfetti && (
           <Confetti
@@ -293,18 +398,23 @@ const Cart = () => {
             colors={['#c49bbb', '#f4c2c2', '#ffb6c1', '#dda0dd', '#e6e6fa']}
           />
         )}
-        <h1>Корзина</h1>
+        <h1>Кошик</h1>
         {cartItems.length === 0 ? (
-          <p>Корзина пуста</p>
+          <p>Кошик порожній</p>
         ) : (
           <>
             <div className="cart-items">
               {cartItems.map((item) => (
                 <div key={item.id} className="cart-item">
-                  <img src={item.image} alt={item.imageAlt} className="cart-item-image" />
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt || `Солодкий букет ${item.composition}`}
+                    className="cart-item-image"
+                    loading="lazy"
+                  />
                   <div className="cart-item-details">
                     <h3>{item.composition}</h3>
-                    <p>Цена: {item.price} грн</p>
+                    <p>Ціна: {item.price} грн</p>
                     <div className="quantity-controls">
                       <button
                         className="quantity-button"
@@ -321,27 +431,30 @@ const Cart = () => {
                         +
                       </button>
                     </div>
-                    <button className="remove-button" onClick={() => removeFromCart(item.id)}>
-                      Удалить
+                    <button
+                      className="remove-button"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Видалити
                     </button>
                   </div>
                 </div>
               ))}
             </div>
             <div className="cart-total">
-              <h3>Итого: {totalPrice} грн</h3>
+              <h3>Разом: {totalPrice} грн</h3>
               {formData.deliveryMethod === 'nova-poshta' && (
                 <>
                   <p>Доставка: {deliveryCost} грн</p>
-                  <p>Предоплата (40%): {prepayment.toFixed(2)} грн</p>
-                  <p>Итого с доставкой: {totalWithDelivery.toFixed(2)} грн</p>
+                  <p>Передплата (40%): {prepayment.toFixed(2)} грн</p>
+                  <p>Разом з доставкою: {totalWithDelivery.toFixed(2)} грн</p>
                 </>
               )}
             </div>
             <div className="order-form">
-              <h2>Оформить заказ</h2>
+              <h2>Оформити замовлення</h2>
               <div className="form-group">
-                <label htmlFor="name">Имя:</label>
+                <label htmlFor="name">Ім’я:</label>
                 <input
                   type="text"
                   id="name"
@@ -363,40 +476,40 @@ const Cart = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Способ доставки:</label>
+                <label>Спосіб доставки:</label>
                 <div className="delivery-options">
                   <div
                     className={`delivery-card ${formData.deliveryMethod === 'nova-poshta' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'nova-poshta' })}
                   >
-                    <h3>Новая Почта</h3>
-                    <p>Доставка от 80 грн, предоплата 40%</p>
+                    <h3>Нова Пошта</h3>
+                    <p>Доставка від 80 грн, передплата 40%</p>
                   </div>
                   <div
                     className={`delivery-card ${formData.deliveryMethod === 'courier' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'courier' })}
                   >
-                    <h3>Курьерская доставка</h3>
-                    <p>Доставка по городу Кропивницкий</p>
+                    <h3>Кур’єрська доставка</h3>
+                    <p>Доставка по місту Кропивницький</p>
                   </div>
                   <div
                     className={`delivery-card ${formData.deliveryMethod === 'self-pickup' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'self-pickup' })}
                   >
-                    <h3>Самовывоз</h3>
-                    <p>Самовывоз, город Кропивницкий</p>
+                    <h3>Самовивіз</h3>
+                    <p>Самовивіз, місто Кропивницький</p>
                   </div>
                 </div>
               </div>
               {formData.deliveryMethod === 'nova-poshta' && (
                 <div className="delivery-details">
                   <div className="form-group">
-                    <label>Город:</label>
+                    <label>Місто:</label>
                     <CitySelect onSelect={(city) => setSelectedCity(city)} />
                   </div>
                   {selectedCity && (
                     <div className="form-group">
-                      <label>Отделение:</label>
+                      <label>Відділення:</label>
                       <WarehouseSelect
                         cityRef={selectedCity.DeliveryCity}
                         onSelect={(warehouse) => setSelectedWarehouse(warehouse)}
@@ -408,7 +521,7 @@ const Cart = () => {
               {formData.deliveryMethod === 'courier' && (
                 <div className="delivery-details">
                   <div className="form-group">
-                    <label htmlFor="address">Адрес доставки:</label>
+                    <label htmlFor="address">Адреса доставки:</label>
                     <input
                       type="text"
                       id="address"
@@ -422,11 +535,11 @@ const Cart = () => {
               )}
               {formData.deliveryMethod === 'self-pickup' && (
                 <div className="delivery-details">
-                  <p>Оставьте ваше имя и номер телефона, и менеджер перезвонит вам в течение 30 минут.</p>
+                  <p>Залиште ваше ім’я та номер телефону, і менеджер передзвонить вам протягом 30 хвилин.</p>
                 </div>
               )}
               <div className="form-group">
-                <label>Способ оплаты:</label>
+                <label>Спосіб оплати:</label>
                 <div>
                   <input
                     type="radio"
@@ -438,12 +551,15 @@ const Cart = () => {
                   />
                   <label htmlFor="privatbank">ПриватБанк</label>
                   <p>
-                    Номер карты: 4149499343979074
-                    <span className="copy-icon" onClick={() => copyToClipboard('4149499343979074')}>
+                    Номер картки: 4149499343979074
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard('4149499343979074')}
+                    >
                       📋
                     </span>
                   </p>
-                  <p>Имя владельца: МНЕКА АННА ВОЛОДИМИРІВНА</p>
+                  <p>Ім’я власника: МНЕКА АННА ВОЛОДИМИРІВНА</p>
                 </div>
                 <div>
                   <input
@@ -458,13 +574,19 @@ const Cart = () => {
                   <p>Отримувач: МНЕКА АННА ВОЛОДИМИРІВНА</p>
                   <p>
                     IBAN: UA093052990000026200670683058
-                    <span className="copy-icon" onClick={() => copyToClipboard('UA093052990000026200670683058')}>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard('UA093052990000026200670683058')}
+                    >
                       📋
                     </span>
                   </p>
                   <p>
                     РНОКПП/ЄДРПОУ: 3154912189
-                    <span className="copy-icon" onClick={() => copyToClipboard('3154912189')}>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard('3154912189')}
+                    >
                       📋
                     </span>
                   </p>
@@ -473,7 +595,7 @@ const Cart = () => {
                 {copyMessage && <p className="copy-message">{copyMessage}</p>}
               </div>
               <div className="form-group">
-                <label htmlFor="comment">Комментарий:</label>
+                <label htmlFor="comment">Коментар:</label>
                 <textarea
                   id="comment"
                   name="comment"
@@ -482,10 +604,12 @@ const Cart = () => {
                 />
               </div>
               <button onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? 'Отправка...' : 'Отправить заказ'}
+                {isSubmitting ? 'Відправка...' : 'Відправити замовлення'}
               </button>
               {submitMessage && (
-                <div className={`message ${submitMessage.includes('Спасибо') ? 'success-message' : 'error-message'}`}>
+                <div
+                  className={`message ${submitMessage.includes('Дякуємо') ? 'success-message' : 'error-message'}`}
+                >
                   <p>{submitMessage}</p>
                 </div>
               )}
