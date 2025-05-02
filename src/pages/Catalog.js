@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Исправленный импорт
 import { Helmet } from 'react-helmet-async';
 import Navigation from '../components/Navigation';
 import ProductList from '../components/ProductList';
@@ -47,7 +47,7 @@ const categoryMeta = {
     name: 'Полуниця в шоколаді',
     ukr: 'полуниця в шоколаді київ',
     rus: 'клубника в шоколаде киев',
-    description: 'Замовляйте полуницю в шоколаді у Києві. Ідеальний подарунок для романтичних моментів!',
+    description: 'Замовляйте полуницю в шоколаді у Києві. Ідеальний подарунок для романтичных моментів!',
   },
   category8: {
     name: 'Квіти',
@@ -73,7 +73,6 @@ const Catalog = () => {
     category4: { productsPerPage: 4 },
     category5: { productsPerPage: 4 },
     category6: { productsPerPage: 4 },
-    category7: { productsPerPage: 4 },
     category8: { productsPerPage: 4 },
   };
 
@@ -104,14 +103,14 @@ const Catalog = () => {
       <h1 className="category-title">{meta.name}</h1>
       <p className="category-description">{meta.description}</p>
       <ProductList
-        key={category}
+        key={category} // Принудительный перерендер при смене категории
         category={category}
         productsPerPage={currentCategory.productsPerPage}
       />
       <div className="cta-section">
-        <a href="/catalog" className="cta-button">
+        <Link to="/catalog" className="cta-button">
           Переглянути всі подарунки
-        </a>
+        </Link>
       </div>
     </div>
   );

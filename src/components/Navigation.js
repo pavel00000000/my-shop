@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navigation.css';
 
 // Список категорий с мета-данными
@@ -47,15 +47,18 @@ const categories = [
 ];
 
 const Navigation = () => {
-  // Функция для отправки события при клике на категорию
-  const handleCategoryClick = (categoryName) => {
+  const navigate = useNavigate();
+
+  // Функция для отправки события и навигации
+  const handleCategoryClick = (categoryName, path) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'select_content',
       content_type: 'category',
       content_id: categoryName,
     });
-    console.log('Navigation.js: Клик по категории:', categoryName); // Для отладки
+    console.log('Navigation.js: Клик по категории:', categoryName, 'Путь:', path);
+    navigate(path); // Явная навигация для надёжности
   };
 
   return (
@@ -66,7 +69,10 @@ const Navigation = () => {
             <Link
               to={category.path}
               title={category.title}
-              onClick={() => handleCategoryClick(category.name)}
+              onClick={(e) => {
+                e.preventDefault(); // Предотвращаем стандартное поведение Link
+                handleCategoryClick(category.name, category.path);
+              }}
             >
               {category.name}
             </Link>
