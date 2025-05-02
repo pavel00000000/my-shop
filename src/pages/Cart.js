@@ -236,7 +236,7 @@ const Cart = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/order', {
+      const response = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -267,8 +267,8 @@ const Cart = () => {
         setSubmitMessage(`Ошибка: ${data.error || 'Не удалось отправить заказ'}`);
       }
     } catch (error) {
-      console.error('Ошибка при отправке:', error);
-      setSubmitMessage('Ошибка при отправке заказа.');
+      console.error('Ошибка при отправке заказа:', error.message);
+      setSubmitMessage('Ошибка при отправке заказа. Попробуйте позже.');
     } finally {
       setIsSubmitting(false);
     }

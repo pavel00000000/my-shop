@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -6,28 +7,31 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const port = process.env.PORT || 3000; // Используем PORT из окружения для Render
+const port = process.env.PORT || 3000;
 
-const token = '7283158477:AAER8yRK1_L1CZQq2S_dixa4nuIABi-Y1_M';
-const chatId = '7949346094';
+// Telegram настройки через переменные окружения
+const token = process.env.TELEGRAM_TOKEN || '7283158477:AAER8yRK1_L1CZQq2S_dixa4nuIABi-Y1_M';
+const chatId = process.env.TELEGRAM_CHAT_ID || '7949346094';
 const bot = new TelegramBot(token, { polling: false });
 
 // Настройка CORS
 const allowedOrigins = [
-  'http://localhost:3001',
-  'http://172.21.64.1:3001',
-  'https://my-shop.onrender.com', // Добавьте ваш домен Render
+  'http://localhost:3001', // Локальный React
+  'http://172.21.64.1:3001', // Локальный IP
+  'https://my-shop-7mpy.onrender.com', // Домен Render
 ];
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`CORS error: Origin ${origin} not allowed`);
       callback(new Error('Not allowed by CORS'));
     }
   }
 }));
 
+// Парсинг тела запросов
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -83,7 +87,7 @@ app.post('/api/order', async (req, res) => {
 
   try {
     await bot.sendMessage(chatId, message);
-    console.log('Сообщение отправлено');
+    console.log('Сообщение отправлено в Telegram');
 
     for (const item of cartItems) {
       if (item.image) {
@@ -103,7 +107,7 @@ app.post('/api/order', async (req, res) => {
 
     res.status(200).json({ message: 'Заказ успешно отправлен' });
   } catch (error) {
-    console.error('Ошибка отправки:', error.message);
+    console.error('Ошибка отправки в Telegram:', error.message);
     res.status(500).json({ error: 'Ошибка при отправке заказа' });
   }
 });
@@ -113,6 +117,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+// Запуск сервера
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);
 });
