@@ -22,20 +22,6 @@ const categories = [
   { path: '/catalog/category8', name: 'Квіти', ukr: 'квіти київ замовити', rus: 'цветы киев заказать' },
 ];
 
-// Компонент маршрутов
-const RoutesComponent = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/catalog" element={<Catalog />} />
-    {categories.map((category) => (
-      <Route key={category.path} path={category.path} element={<Catalog category={category.name} />} />
-    ))}
-    <Route path="/product/:id" element={<ProductPage />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="*" element={<Navigate to="/" />} />
-  </Routes>
-);
-
 // Компонент Layout
 const Layout = () => {
   const location = useLocation();
@@ -76,8 +62,9 @@ const Layout = () => {
         description: 'Оформіть замовлення солодких букетів, подарункових боксів та квітів у Києві.',
         keywords: 'оформити замовлення київ, заказать подарки киев, кошик подарунків, корзина киев',
       };
-    } else {
-      const category = categories.find((c) => c.path === path);
+    } else if (path.startsWith('/catalog/')) {
+      const categoryId = path.split('/')[2]; // Например, 'category1'
+      const category = categories.find((c) => c.path === `/catalog/${categoryId}`);
       if (category) {
         return {
           title: `${category.name} | Купити в Києві | My Shop`,
@@ -128,7 +115,14 @@ const Layout = () => {
       <Header />
       {!isHomePage && !isCatalogPage && !isCartPage && window.innerWidth > 768 && <Navigation />}
       <main className="main-content">
-        <RoutesComponent />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/:category" element={<Catalog />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </main>
     </div>
   );
