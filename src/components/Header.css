@@ -1,0 +1,177 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #333333;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Высокий z-index для видимости */
+  font-family: 'Roboto', sans-serif;
+  border-bottom: 1px solid #ffffff;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+
+.burger-menu {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001; /* Выше меню */
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #f0f0f0;
+  transition: color 0.3s;
+  padding: 5px;
+  position: relative;
+}
+
+.nav a:hover {
+  color: #ffffff;
+}
+
+.nav a .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.nav a span {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.cart-indicator {
+  position: absolute;
+  top: -10px;
+  right: 74px;
+  background: #c49bbb;
+  color: #ffffff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.categories-submenu {
+  display: none;
+}
+
+.submenu-title {
+  font-size: 14px;
+  color: #aaaaaa;
+  padding: 10px;
+  border-bottom: 1px solid #444444;
+  margin-bottom: 5px;
+}
+
+.categories-submenu a {
+  display: block;
+  padding: 10px 20px;
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.categories-submenu a:hover,
+.categories-submenu a.active {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .burger-menu {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .nav.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #333333;
+    padding: 20px;
+    z-index: 999;
+  }
+
+  .nav.open a {
+    padding: 10px;
+    border-bottom: 1px solid #444444;
+  }
+
+  .nav.open a:last-child {
+    border-bottom: none;
+  }
+
+  /* Убрано отображение .categories-submenu в мобильной версии */
+  .nav.open .categories-submenu {
+    display: none !important;
+  }
+
+  /* Скрытие любых подменю на странице корзины */
+  .header .nav[data-page^="/cart"] .categories-submenu,
+  .header .nav.open[data-page^="/cart"] .categories-submenu,
+  .header .nav[data-page^="/cart"] [class*="submenu"],
+  .header .nav.open[data-page^="/cart"] [class*="submenu"],
+  .header .nav.open[data-page^="/cart"] > *:not(a) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  /* Скрытие Navigation на странице корзины */
+  .header .navigation[data-page^="/cart"],
+  .navigation[data-page^="/cart"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  .cart-indicator {
+    right: 60px;
+  }
+}

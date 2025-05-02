@@ -1,0 +1,169 @@
+body {
+  margin: 0;
+  touch-action: none;
+  overflow: hidden;
+  user-select: none;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3; /* Выше canvas */
+  overflow: hidden;
+}
+
+article {
+  position: relative;
+  width: 18ch;
+  font: bold 3.5vmin/1 system-ui;
+  color: #d49518;
+  text-rendering: optimizeLegibility;
+  margin-bottom: 2vmin;
+  text-align: center;
+  transform: translateY(-4vmin) translateX(-40%); /* Смещение правее */
+}
+
+article > h2 {
+  font-size: 18vmin;
+  opacity: 0;
+  animation: fade-in 1s forwards;
+  margin: 0;
+  line-height: 1.1;
+}
+
+article > p {
+  opacity: 0;
+  animation: fade-in 1s forwards;
+  margin: 0;
+  line-height: 1.2;
+}
+
+article > p::before,
+article > p::after {
+  opacity: 0;
+  animation: fade-in 1s forwards;
+}
+
+article:nth-of-type(3) > h2 {
+  text-align: center;
+  line-height: 100%;
+  margin: 0;
+}
+
+article:nth-of-type(3) > p {
+  position: relative;
+  font-size: 10vmin;
+  line-height: 100%;
+  margin: 0;
+  color: #c51;
+}
+
+@media screen and (min-width: 600px) {
+  article:nth-of-type(3) > p::before {
+    content: "";
+    position: absolute;
+    height: 100vh;
+    width: 50vw;
+    border-top: 0.2vmin solid transparent;
+    border-left: 0.2vmin solid transparent;
+    border-image: linear-gradient(315deg, #8c1896, transparent) 1;
+    left: -16vmin;
+    top: -13vmin;
+  }
+  article:nth-of-type(3) > p::after {
+    content: "";
+    position: absolute;
+    height: 100vh;
+    width: 50vw;
+    border-bottom: 0.2vmin solid transparent;
+    border-right: 0.2vmin solid transparent;
+    border-image: linear-gradient(135deg, #b5b5b5, transparent) 1;
+    right: -16vmin;
+    bottom: -11vmin;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    width: 100vw;
+    padding: 3vmin;
+  }
+  article {
+    width: 20ch;
+    font-size: 3vmin;
+    transform: translateY(-3vmin) translateX(-20%); /* Смещение правее */
+    margin-bottom: 1.5vmin;
+  }
+  article > h2 {
+    font-size: 15vmin;
+    line-height: 1;
+  }
+  article:nth-of-type(3) > p {
+    font-size: 7vmin;
+  }
+  article:nth-of-type(3) > p::before,
+  article:nth-of-type(3) > p::after {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  main {
+    width: 100vw;
+  }
+  article {
+    width: 22ch;
+    font-size: 2.5vmin;
+    transform: translateY(-2vmin) translateX(-10%); /* Смещение правее */
+    margin-bottom: 1vmin;
+  }
+  article > h2 {
+    font-size: 12vmin;
+  }
+  article:nth-of-type(3) > p {
+    font-size: 6vmin;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  opacity: 1 !important;
+}
+
+@keyframes fade-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

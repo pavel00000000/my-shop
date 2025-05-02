@@ -1,0 +1,210 @@
+body { 
+  margin: 0;
+  touch-action: none;
+  overflow: hidden;
+  user-select: none;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Исправлено: заменено | на : */
+  overflow: visible;
+}
+
+.content-wrapper {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.left-half {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.right-half {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 2vmin;
+  box-sizing: border-box;
+}
+
+.text-overlay {
+  position: relative;
+  z-index: 2;
+}
+
+.home-container article {
+  position: relative;
+  width: 18ch;
+  font: bold 2vmin/1 system-ui;
+  color: #f9d0f1;
+  text-rendering: optimizeLegibility;
+  margin-bottom: 4vmin;
+  text-align: left;
+}
+
+.home-container article > h2 {
+  font-size: 12vmin;
+  margin: 0;
+  line-height: 1.2;
+  margin-left: -15vw;
+}
+
+.image-container {
+  width: 110vw;
+  height: auto;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.categories-list {
+  display: none; /* Скрываем категории в веб-версии */
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --image-offset: 5%; /* Изменяйте это значение в процентах для смещения картинки вправо */
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .left-half {
+    width: 100vw;
+    height: 100vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+    transform: translateX(-40px);
+  }
+
+  .right-half {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: var(--image-offset);
+  }
+
+  .image-container {
+    width: 80vw;
+    height: 80vw;
+  }
+
+  main {
+    align-items: flex-start;
+    padding: 5vmin;
+  }
+
+  .home-container article {
+    font: bold 5vmin/1 system-ui;
+  }
+
+  .home-container article > h2 {
+    font-size: 13vmin;
+    margin-left: -12vw;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .categories-list {
+    display: block; /* Показываем категории в мобильной версии */
+    position: fixed;
+    bottom: -82%;
+    left: 0;
+    transform: translateX(40px);
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    padding: 2vmin 0;
+  }
+
+  .categories-title {
+    font-size: 4vmin;
+    color: #ffffff;
+    padding: 2vmin 4vmin;
+    border-bottom: 2px solid #44444400;
+    margin-bottom: 2vmin;
+  }
+
+  .categories-list a {
+    display: block;
+    padding: 2vmin 4vmin;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 5vmin;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .categories-list a:hover,
+  .categories-list a.active {
+    background-color: #555555;
+    color: #ffffff;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .image-container {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .home-container article > h2 {
+    font-size: 10vmin;
+  }
+
+  .categories-title {
+    font-size: 3.5vmin;
+  }
+
+  .categories-list {
+    bottom: -82%; /* Сохранено то же значение для согласованности */
+  }
+
+  .categories-list a {
+    font-size: 3vmin;
+    padding: 1.5vmin 3vmin;
+  }
+}
