@@ -6,13 +6,18 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Используем PORT из окружения для Render
 
 const token = '7283158477:AAER8yRK1_L1CZQq2S_dixa4nuIABi-Y1_M';
 const chatId = '7949346094';
 const bot = new TelegramBot(token, { polling: false });
 
-const allowedOrigins = ['http://localhost:3001', 'http://172.21.64.1:3001'];
+// Настройка CORS
+const allowedOrigins = [
+  'http://localhost:3001',
+  'http://172.21.64.1:3001',
+  'https://my-shop.onrender.com', // Добавьте ваш домен Render
+];
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -22,10 +27,17 @@ app.use(cors({
     }
   }
 }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 
+// Обслуживание статических файлов из папки public (для изображений)
+app.use('/papka', express.static(path.join(__dirname, 'public/papka')));
+
+// Обслуживание собранного React-приложения из папки build
+app.use(express.static(path.join(__dirname, 'build')));
+
+// API для обработки заказов
 app.post('/api/order', async (req, res) => {
   const { name, phone, deliveryMethod, city, warehouse, address, pickupAddress, comment, paymentMethod, deliveryCost, prepayment, cartItems } = req.body;
 
@@ -94,6 +106,11 @@ app.post('/api/order', async (req, res) => {
     console.error('Ошибка отправки:', error.message);
     res.status(500).json({ error: 'Ошибка при отправке заказа' });
   }
+});
+
+// Перенаправление всех остальных запросов на index.html для SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(port, () => {
