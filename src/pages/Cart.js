@@ -3,7 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { CartContext } from '../context/CartContext';
 import Confetti from 'react-confetti';
 import './Cart.css';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+
+// Определяем базовый URL для API в зависимости от окружения
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://my-shop-7mpy.onrender.com'
+  : 'http://localhost:3000';
 
 const CitySelect = ({ onSelect }) => {
   const [cities, setCities] = useState([]);
@@ -48,7 +53,7 @@ const CitySelect = ({ onSelect }) => {
   };
 
   return (
-    <div className="autocomplete">
+    <div className="cart-unique-autocomplete">
       <input
         type="text"
         value={searchTerm}
@@ -57,7 +62,7 @@ const CitySelect = ({ onSelect }) => {
         className="form-input"
       />
       {cities.length > 0 && (
-        <ul className="autocomplete-list">
+        <ul className="cart-unique-autocomplete-list">
           {cities.map((city) => (
             <li key={city.DeliveryCity} onClick={() => handleSelect(city)}>
               {city.MainDescription}, {city.Area} обл.
@@ -118,7 +123,7 @@ const WarehouseSelect = ({ cityRef, onSelect }) => {
   };
 
   return (
-    <div className="autocomplete">
+    <div className="cart-unique-autocomplete">
       <input
         type="text"
         value={searchTerm}
@@ -127,7 +132,7 @@ const WarehouseSelect = ({ cityRef, onSelect }) => {
         className="form-input"
       />
       {warehouses.length > 0 && (
-        <ul className="autocomplete-list">
+        <ul className="cart-unique-autocomplete-list">
           {warehouses.map((warehouse) => (
             <li key={warehouse.Ref} onClick={() => handleSelect(warehouse)}>
               {warehouse.Description}
@@ -142,6 +147,7 @@ const WarehouseSelect = ({ cityRef, onSelect }) => {
 const Cart = () => {
   const context = useContext(CartContext);
   const { cartItems = [], removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = context || {};
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -155,7 +161,7 @@ const Cart = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [copyMessage, setCopyMessage] = useState('');
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // Отслеживание просмотра корзины
   useEffect(() => {
@@ -278,7 +284,7 @@ const Cart = () => {
     }
 
     try {
-      const response = await fetch('/api/order', {
+      const response = await fetch(`${API_BASE_URL}/api/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -294,15 +300,13 @@ const Cart = () => {
 
       const data = await response.json();
       if (response.ok) {
-        const successMessage = 'Дякуємо за замовлення. Ваше замовлення прийнято в обробку.';
-        setSubmitMessage(successMessage);
-        setShowConfetti(true);
+        setShowModal(true);
 
         // Событие покупки
         window.dataLayer.push({
           event: 'purchase',
           ecommerce: {
-            transaction_id: data.orderId || `TX${Date.now()}`, // Уникальный ID заказа
+            transaction_id: data.orderId || `TX${Date.now()}`,
             value: totalPrice + (formData.deliveryMethod === 'nova-poshta' ? 80 : 0),
             currency: 'UAH',
             items: cartItems.map((item) => ({
@@ -314,10 +318,6 @@ const Cart = () => {
           },
         });
 
-        setTimeout(() => {
-          setShowConfetti(false);
-          setSubmitMessage('');
-        }, 5000);
         clearCart();
         setFormData({
           name: '',
@@ -374,7 +374,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart-wrapper">
+    <div className="cart-unique-wrapper">
       <Helmet>
         <title>Кошик | Оформити Замовлення в Києві | My Shop</title>
         <meta
@@ -390,50 +390,42 @@ const Cart = () => {
         <link rel="canonical" href="https://my-shop-7mpy.onrender.com/cart" />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
-      <div className="cart-container">
-        {showConfetti && (
-          <Confetti
-            width={window.innerWidth}
-            height={window.innerHeight}
-            numberOfPieces={500}
-            colors={['#c49bbb', '#f4c2c2', '#ffb6c1', '#dda0dd', '#e6e6fa']}
-          />
-        )}
+      <div className="cart-unique-container">
         <h1>Кошик</h1>
         {cartItems.length === 0 ? (
           <p>Кошик порожній</p>
         ) : (
           <>
-            <div className="cart-items">
+            <div className="cart-unique-items">
               {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
+                <div key={item.id} className="cart-unique-item">
                   <img
                     src={item.image}
                     alt={item.imageAlt || `Солодкий букет ${item.composition}`}
-                    className="cart-item-image"
+                    className="cart-unique-item-image"
                     loading="lazy"
                   />
-                  <div className="cart-item-details">
+                  <div className="cart-unique-item-details">
                     <h3>{item.composition}</h3>
                     <p>Ціна: {item.price} грн</p>
-                    <div className="quantity-controls">
+                    <div className="cart-unique-quantity-controls">
                       <button
-                        className="quantity-button"
+                        className="cart-unique-quantity-button"
                         onClick={() => decreaseQuantity(item.id)}
                         disabled={item.quantity <= 1}
                       >
                         −
                       </button>
-                      <span className="quantity">{item.quantity}</span>
+                      <span className="cart-unique-quantity">{item.quantity}</span>
                       <button
-                        className="quantity-button"
+                        className="cart-unique-quantity-button"
                         onClick={() => increaseQuantity(item.id)}
                       >
                         +
                       </button>
                     </div>
                     <button
-                      className="remove-button"
+                      className="cart-unique-remove-button"
                       onClick={() => removeFromCart(item.id)}
                     >
                       Видалити
@@ -442,7 +434,7 @@ const Cart = () => {
                 </div>
               ))}
             </div>
-            <div className="cart-total">
+            <div className="cart-unique-total">
               <h3>Разом: {totalPrice} грн</h3>
               {formData.deliveryMethod === 'nova-poshta' && (
                 <>
@@ -452,9 +444,9 @@ const Cart = () => {
                 </>
               )}
             </div>
-            <div className="order-form">
+            <div className="cart-unique-order-form">
               <h2>Оформити замовлення</h2>
-              <div className="form-group">
+              <div className="cart-unique-form-group">
                 <label htmlFor="name">Ім’я:</label>
                 <input
                   type="text"
@@ -465,7 +457,7 @@ const Cart = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="cart-unique-form-group">
                 <label htmlFor="phone">Телефон:</label>
                 <input
                   type="tel"
@@ -476,25 +468,25 @@ const Cart = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="cart-unique-form-group">
                 <label>Спосіб доставки:</label>
-                <div className="delivery-options">
+                <div className="cart-unique-delivery-options">
                   <div
-                    className={`delivery-card ${formData.deliveryMethod === 'nova-poshta' ? 'selected' : ''}`}
+                    className={`cart-unique-delivery-card ${formData.deliveryMethod === 'nova-poshta' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'nova-poshta' })}
                   >
                     <h3>Нова Пошта</h3>
                     <p>Доставка від 80 грн, передплата 40%</p>
                   </div>
                   <div
-                    className={`delivery-card ${formData.deliveryMethod === 'courier' ? 'selected' : ''}`}
+                    className={`cart-unique-delivery-card ${formData.deliveryMethod === 'courier' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'courier' })}
                   >
                     <h3>Кур’єрська доставка</h3>
                     <p>Доставка по місту Кропивницький</p>
                   </div>
                   <div
-                    className={`delivery-card ${formData.deliveryMethod === 'self-pickup' ? 'selected' : ''}`}
+                    className={`cart-unique-delivery-card ${formData.deliveryMethod === 'self-pickup' ? 'selected' : ''}`}
                     onClick={() => setFormData({ ...formData, deliveryMethod: 'self-pickup' })}
                   >
                     <h3>Самовивіз</h3>
@@ -503,13 +495,13 @@ const Cart = () => {
                 </div>
               </div>
               {formData.deliveryMethod === 'nova-poshta' && (
-                <div className="delivery-details">
-                  <div className="form-group">
+                <div className="cart-unique-delivery-details">
+                  <div className="cart-unique-form-group">
                     <label>Місто:</label>
                     <CitySelect onSelect={(city) => setSelectedCity(city)} />
                   </div>
                   {selectedCity && (
-                    <div className="form-group">
+                    <div className="cart-unique-form-group">
                       <label>Відділення:</label>
                       <WarehouseSelect
                         cityRef={selectedCity.DeliveryCity}
@@ -520,8 +512,8 @@ const Cart = () => {
                 </div>
               )}
               {formData.deliveryMethod === 'courier' && (
-                <div className="delivery-details">
-                  <div className="form-group">
+                <div className="cart-unique-delivery-details">
+                  <div className="cart-unique-form-group">
                     <label htmlFor="address">Адреса доставки:</label>
                     <input
                       type="text"
@@ -535,11 +527,11 @@ const Cart = () => {
                 </div>
               )}
               {formData.deliveryMethod === 'self-pickup' && (
-                <div className="delivery-details">
+                <div className="cart-unique-delivery-details">
                   <p>Залиште ваше ім’я та номер телефону, і менеджер передзвонить вам протягом 30 хвилин.</p>
                 </div>
               )}
-              <div className="form-group">
+              <div className="cart-unique-form-group">
                 <label>Спосіб оплати:</label>
                 <div>
                   <input
@@ -554,7 +546,7 @@ const Cart = () => {
                   <p>
                     Номер картки: 4149499343979074
                     <span
-                      className="copy-icon"
+                      className="cart-unique-copy-icon"
                       onClick={() => copyToClipboard('4149499343979074')}
                     >
                       📋
@@ -576,7 +568,7 @@ const Cart = () => {
                   <p>
                     IBAN: UA093052990000026200670683058
                     <span
-                      className="copy-icon"
+                      className="cart-unique-copy-icon"
                       onClick={() => copyToClipboard('UA093052990000026200670683058')}
                     >
                       📋
@@ -585,7 +577,7 @@ const Cart = () => {
                   <p>
                     РНОКПП/ЄДРПОУ: 3154912189
                     <span
-                      className="copy-icon"
+                      className="cart-unique-copy-icon"
                       onClick={() => copyToClipboard('3154912189')}
                     >
                       📋
@@ -593,9 +585,9 @@ const Cart = () => {
                   </p>
                   <p>Призначення платежу: Поповнення рахунку, МНЕКА АННА ВОЛОДИМИРІВНА</p>
                 </div>
-                {copyMessage && <p className="copy-message">{copyMessage}</p>}
+                {copyMessage && <p className="cart-unique-copy-message">{copyMessage}</p>}
               </div>
-              <div className="form-group">
+              <div className="cart-unique-form-group">
                 <label htmlFor="comment">Коментар:</label>
                 <textarea
                   id="comment"
@@ -604,12 +596,12 @@ const Cart = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <button onClick={handleSubmit} disabled={isSubmitting}>
+              <button className="cart-unique-submit-button" onClick={handleSubmit} disabled={isSubmitting}>
                 {isSubmitting ? 'Відправка...' : 'Відправити замовлення'}
               </button>
               {submitMessage && (
                 <div
-                  className={`message ${submitMessage.includes('Дякуємо') ? 'success-message' : 'error-message'}`}
+                  className={`cart-unique-message ${submitMessage.includes('Дякуємо') ? 'cart-unique-success-message' : 'cart-unique-error-message'}`}
                 >
                   <p>{submitMessage}</p>
                 </div>
@@ -618,6 +610,28 @@ const Cart = () => {
           </>
         )}
       </div>
+      {showModal && (
+        <div className="cart-unique-modal">
+          <div className="cart-unique-modal-content">
+            <h2>Дякуємо за замовлення!</h2>
+            <p>Ваше замовлення успішно прийнято в обробку.</p>
+            <div className="cart-unique-modal-buttons">
+              <button
+                className="cart-unique-modal-button"
+                onClick={() => navigate('/')}
+              >
+                Главная страница
+              </button>
+              <button
+                className="cart-unique-modal-button"
+                onClick={() => navigate('/categories')}
+              >
+                Категории
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,31 +4,35 @@ import { useNavigate } from 'react-router-dom';
 import './ProductCard.css';
 
 const ProductCard = ({ product, view }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showCartModal, setShowCartModal] = useState(false); // Модальное окно для корзины
+  const [showCompositionModal, setShowCompositionModal] = useState(false); // Модальное окно для состава
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const handleBuy = () => {
     addToCart(product);
-    setShowModal(true);
+    setShowCartModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeCartModal = () => {
+    setShowCartModal(false);
   };
 
   const goToCart = () => {
-    setShowModal(false);
+    setShowCartModal(false);
     navigate('/cart');
   };
 
+  const openCompositionModal = () => {
+    setShowCompositionModal(true);
+  };
+
+  const closeCompositionModal = () => {
+    setShowCompositionModal(false);
+  };
+
   return (
-    <div className={`product-card ${view} ${isExpanded ? 'expanded' : ''}`}>
+    <div className={`product-card ${view}`}>
       <div className="image-wrapper">
         {product.image ? (
           <img
@@ -41,26 +45,35 @@ const ProductCard = ({ product, view }) => {
         )}
       </div>
       <p>{product.price} грн</p>
-      {isExpanded && (
-        <div className="composition-wrapper">
-          <p>{product.composition}</p>
-        </div>
-      )}
       <div className="product-actions">
-        <button onClick={toggleExpand} className="product-link details">
-          {isExpanded ? 'Скрыть' : 'Подробнее'}
+        <button onClick={openCompositionModal} className="product-link details">
+          Состав
         </button>
         <button onClick={handleBuy} className="product-link buy">Купить</button>
       </div>
 
-      {showModal && (
+      {/* Модальное окно для корзины */}
+      {showCartModal && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Товар добавлен в корзину</h2>
             <p>Вы можете продолжить покупки или перейти в корзину для оформления заказа.</p>
             <div className="modal-actions">
-              <button onClick={closeModal} className="continue-shopping">Продолжить покупки</button>
+              <button onClick={closeCartModal} className="continue-shopping">Продолжить покупки</button>
               <button onClick={goToCart} className="go-to-cart">Перейти в корзину</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Модальное окно для состава */}
+      {showCompositionModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Состав продукта</h2>
+            <p>{product.composition || 'Состав не указан'}</p>
+            <div className="modal-actions">
+              <button onClick={closeCompositionModal} className="close-modal">Закрыть</button>
             </div>
           </div>
         </div>

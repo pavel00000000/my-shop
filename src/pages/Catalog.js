@@ -109,7 +109,7 @@ const Catalog = () => {
       />
       <div className="cta-section">
         <Link to="/catalog" className="cta-button">
-          Переглянути всі подарунки
+          
         </Link>
       </div>
     </div>

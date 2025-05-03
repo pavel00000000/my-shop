@@ -1,61 +1,59 @@
 body {
   margin: 0;
-  touch-action: none;
   overflow-x: hidden;
-  user-select: none;
 }
 
-.cart-wrapper {
+.cart-unique-wrapper {
   max-height: 80vh;
   overflow-y: auto;
+  overflow-x: auto; /* Добавлено */
   margin: 10px 0;
-  width: 100%;
-  max-width: 2000px;
+  width: 2000px; /* Увеличена ширина */
+  max-width: none; /* Убрано ограничение */
   box-sizing: border-box;
   position: relative;
-  left: 50%;
-  transform: translateX(-33%);
+  /* Удалено центрирование, чтобы не мешало растяжению */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
   scrollbar-width: thin;
   scrollbar-color: #c49bbb #f0f0f0;
 }
 
-.cart-wrapper::-webkit-scrollbar {
+.cart-unique-wrapper::-webkit-scrollbar {
   width: 8px;
 }
 
-.cart-wrapper::-webkit-scrollbar-track {
+.cart-unique-wrapper::-webkit-scrollbar-track {
   background: #f0f0f0;
   border-radius: 4px;
 }
 
-.cart-wrapper::-webkit-scrollbar-thumb {
+.cart-unique-wrapper::-webkit-scrollbar-thumb {
   background: #c49bbb;
   border-radius: 4px;
 }
 
-.cart-wrapper::-webkit-scrollbar-thumb:hover {
+.cart-unique-wrapper::-webkit-scrollbar-thumb:hover {
   background: #a07c96;
 }
 
-.cart-container {
+.cart-unique-container {
   padding: 20px;
   width: 100%;
   max-width: 1000px;
-  color: #333;
-  position: relative;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон для glassmorphism */
-  backdrop-filter: blur(10px); /* Размытие фона */
-  border-radius: 15px; /* Скруглённые углы */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Плавные тени */
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.cart-items {
+.cart-unique-items {
   list-style: none;
   padding: 0;
 }
 
-.cart-item {
+.cart-unique-item {
   display: flex;
   align-items: center;
   padding: 15px;
@@ -63,34 +61,33 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid #888888;
   border-radius: 8px;
-  backdrop-filter: blur(5px);
 }
 
-.cart-item-image {
+.cart-unique-item-image {
   width: 50px;
   height: auto;
   margin-right: 10px;
   border-radius: 4px;
 }
 
-.cart-item-details {
+.cart-unique-item-details {
   flex: 1;
 }
 
-.cart-item-details p {
+.cart-unique-item-details p {
   margin: 5px 0;
-  color: #ffffff; /* Чёрный текст заменён на белый */
-  font-weight: bold; /* Жирный текст */
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.quantity-controls {
+.cart-unique-quantity-controls {
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 5px 0;
 }
 
-.quantity-button {
+.cart-unique-quantity-button {
   width: 30px;
   height: 30px;
   background: #c49bbb;
@@ -100,25 +97,24 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  font-weight: bold; /* Жирный текст для кнопок "+" и "−" */
 }
 
-.quantity-button:hover {
+.cart-unique-quantity-button:hover {
   background: #a07c96;
 }
 
-.quantity-button:disabled {
+.cart-unique-quantity-button:disabled {
   background: #cccccc;
   cursor: not-allowed;
 }
 
-.quantity {
-  font-size: 18px; /* Увеличенный размер для розового текста */
-  font-weight: bold; /* Жирный текст */
+.cart-unique-quantity {
+  font-size: 18px;
+  font-weight: bold;
   color: #c49bbb;
 }
 
-.remove-button {
+.cart-unique-remove-button {
   padding: 8px 16px;
   background: #c49bbb;
   color: #ffffff;
@@ -128,49 +124,50 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.remove-button:hover {
+.cart-unique-remove-button:hover {
   background: #a07c96;
 }
 
-.cart-total {
+.cart-unique-total {
   margin-top: 20px;
   text-align: right;
 }
 
-.cart-total h3, .cart-total p {
+.cart-unique-total h3,
+.cart-unique-total p {
   margin: 5px 0;
-  font-size: 18px; /* Увеличенный размер для розового текста */
-  font-weight: bold; /* Жирный текст */
+  font-size: 18px;
+  font-weight: bold;
   color: #c49bbb;
 }
 
-.order-form {
+.cart-unique-order-form {
   margin-top: 20px;
 }
 
-.order-form h2 {
+.cart-unique-order-form h2 {
   margin: 0 0 15px 0;
-  font-size: 18px; /* Увеличенный размер для розового текста */
-  font-weight: bold; /* Жирный текст */
+  font-size: 18px;
+  font-weight: bold;
   color: #c49bbb;
 }
 
-.form-group {
+.cart-unique-form-group {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.cart-unique-form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #ffffff; /* Чёрный текст заменён на белый */
+  color: #ffffff;
 }
 
-.form-group input,
-.form-group textarea {
+.cart-unique-form-group input,
+.cart-unique-form-group textarea {
   width: 100%;
   padding: 8px;
-  border: 1px solid hsl(0, 0%, 100%);
+  border: 1px solid #ffffff;
   border-radius: 4px;
   font-size: 16px;
   background: #d3d3d3;
@@ -178,24 +175,24 @@ body {
   transition: border-color 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.cart-unique-form-group input:focus,
+.cart-unique-form-group textarea:focus {
   border-color: #c49bbb;
   outline: none;
 }
 
-.form-group input[type="radio"] {
+.cart-unique-form-group input[type="radio"] {
   width: auto;
   margin-right: 10px;
 }
 
-.delivery-options {
+.cart-unique-delivery-options {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.delivery-card {
+.cart-unique-delivery-card {
   flex: 1;
   padding: 15px;
   background: rgba(255, 255, 255, 0.05);
@@ -205,39 +202,39 @@ body {
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.delivery-card:hover {
+.cart-unique-delivery-card:hover {
   transform: translateY(-2px);
   border-color: #c49bbb;
 }
 
-.delivery-card.selected {
+.cart-unique-delivery-card.selected {
   border-color: #c49bbb;
   background: rgba(196, 155, 187, 0.1);
 }
 
-.delivery-card h3 {
+.cart-unique-delivery-card h3 {
   margin: 0 0 10px;
   font-size: 16px;
-  color: #ffffff; /* Розовый заменён на белый для "Доставка" */
-  font-weight: bold; /* Жирный текст */
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.delivery-card p {
+.cart-unique-delivery-card p {
   margin: 0;
   font-size: 14px;
-  color: #ffffff; /* Серый заменён на белый для "Доставка по городу Кропивницкий" */
-  font-weight: bold; /* Жирный текст */
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.delivery-details {
+.cart-unique-delivery-details {
   margin-top: 20px;
 }
 
-.autocomplete {
+.cart-unique-autocomplete {
   position: relative;
 }
 
-.autocomplete-list {
+.cart-unique-autocomplete-list {
   position: absolute;
   top: 100%;
   left: 0;
@@ -253,16 +250,16 @@ body {
   z-index: 10;
 }
 
-.autocomplete-list li {
+.cart-unique-autocomplete-list li {
   padding: 8px;
   cursor: pointer;
 }
 
-.autocomplete-list li:hover {
+.cart-unique-autocomplete-list li:hover {
   background: #f0f0f0;
 }
 
-.copy-icon {
+.cart-unique-copy-icon {
   margin-left: 10px;
   cursor: pointer;
   color: #c49bbb;
@@ -270,11 +267,11 @@ body {
   transition: color 0.3s ease;
 }
 
-.copy-icon:hover {
+.cart-unique-copy-icon:hover {
   color: #a07c96;
 }
 
-.copy-message {
+.cart-unique-copy-message {
   margin: 5px 0;
   padding: 5px;
   background: rgba(196, 155, 187, 0.2);
@@ -284,7 +281,7 @@ body {
   font-size: 14px;
 }
 
-button {
+.cart-unique-submit-button {
   padding: 10px 20px;
   background: #c49bbb;
   color: #ffffff;
@@ -297,11 +294,16 @@ button {
   margin-top: 10px;
 }
 
-button:hover {
+.cart-unique-submit-button:hover {
   background: #a07c96;
 }
 
-.message {
+.cart-unique-submit-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.cart-unique-message {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -313,84 +315,176 @@ button:hover {
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 2000;
-  transition: opacity 0.3s ease;
 }
 
-.success-message {
+.cart-unique-success-message {
   background: rgba(255, 255, 255, 0.95);
   border: 2px solid #c49bbb;
   color: #333;
-  opacity: 1;
 }
 
-.error-message {
+.cart-unique-error-message {
   background: rgba(255, 0, 0, 0.1);
   border: 2px solid #ff0000;
   color: #ff0000;
-  opacity: 1;
 }
 
-.message.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.message p {
+.cart-unique-message p {
   margin: 0;
 }
 
+/* Стили для модального окна */
+.cart-unique-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cart-unique-modal-content {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid #888888;
+  box-sizing: border-box;
+}
+
+.cart-unique-modal-content h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.cart-unique-modal-content p {
+  margin: 0 0 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.cart-unique-modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.cart-unique-modal-button {
+  padding: 10px 20px;
+  background: #c49bbb;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: auto;
+}
+
+.cart-unique-modal-button:hover {
+  background: #a07c96;
+}
+
 @media (max-width: 768px) {
-  .cart-wrapper {
+  .cart-unique-wrapper {
     max-height: 85vh;
-    overflow-y: auto !important;
-    left: 50%;
-    transform: translateX(-50%);
     max-width: 100%;
     margin: 5px 0;
   }
-  .cart-container {
+
+  .cart-unique-container {
     max-width: 100%;
     padding: 10px;
-    min-height: 100%;
   }
-  .cart-item {
+
+  .cart-unique-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     padding: 10px;
   }
-  .cart-item-image {
+
+  .cart-unique-item-image {
     margin-right: 0;
     margin-bottom: 10px;
     width: 40px;
   }
-  .cart-total {
+
+  .cart-unique-total {
     text-align: center;
     font-size: 16px;
   }
-  .order-form h2 {
+
+  .cart-unique-order-form h2 {
     font-size: 16px;
   }
-  .form-group input,
-  .form-group textarea {
+
+  .cart-unique-form-group input,
+  .cart-unique-form-group textarea {
     font-size: 14px;
     padding: 6px;
   }
-  .delivery-options {
+
+  .cart-unique-delivery-options {
     flex-direction: column;
   }
-  .delivery-card {
+
+  .cart-unique-delivery-card {
     padding: 10px;
   }
-  .delivery-card h3 {
+
+  .cart-unique-delivery-card h3 {
     font-size: 14px;
   }
-  .delivery-card p {
+
+  .cart-unique-delivery-card p {
     font-size: 12px;
   }
-  .message {
+
+  .cart-unique-message {
     width: 90%;
     font-size: 16px;
     padding: 15px;
+  }
+
+  .cart-unique-modal {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cart-unique-modal-content {
+    padding: 15px;
+    width: 90%;
+    max-width: 350px;
+  }
+
+  .cart-unique-modal-content h2 {
+    font-size: 20px;
+  }
+
+  .cart-unique-modal-content p {
+    font-size: 14px;
+  }
+
+  .cart-unique-modal-button {
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }

@@ -9,7 +9,37 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
   const productListRef = useRef(null);
 
   // Фильтрация продуктов по категории
-  const filteredProducts = category === 'all' ? products : products.filter(product => product.category === category);
+  const filteredProducts =
+    category === 'all' ? products : products.filter((product) => product.category === category);
+
+  // Пагинация
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  // Логи для отладки: состояние компонента
+  useEffect(() => {
+    console.log('ProductList: Текущая категория:', category);
+    console.log('ProductList: Количество отфильтрованных продуктов:', filteredProducts.length);
+    console.log('ProductList: Всего страниц (totalPages):', totalPages);
+    console.log('ProductList: Текущая страница (currentPage):', currentPage);
+    console.log('ProductList: Количество продуктов на странице (productsPerPage):', productsPerPage);
+  }, [category, filteredProducts, totalPages, currentPage, productsPerPage]);
+
+  // Сброс currentPage при смене категории или сортировки
+  useEffect(() => {
+    console.log('ProductList: Сброс currentPage на 1 из-за смены категории или сортировки');
+    setCurrentPage(1);
+  }, [category, sortOrder]);
+
+  // Проверка, чтобы currentPage не превышал totalPages
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      console.log('ProductList: currentPage больше totalPages, устанавливаем currentPage:', totalPages);
+      setCurrentPage(totalPages);
+    } else if (totalPages === 0 && currentPage !== 1) {
+      console.log('ProductList: totalPages равно 0, сбрасываем currentPage на 1');
+      setCurrentPage(1);
+    }
+  }, [currentPage, totalPages]);
 
   // Сортировка продуктов
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -21,41 +51,62 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
     return 0;
   });
 
-  // Пагинация
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-
+  // Обработчики для пагинации
   const handleNextPage = () => {
+    console.log('ProductList: Нажата кнопка "Вперёд"');
+    console.log('ProductList: Текущая страница до обновления:', currentPage);
+    console.log('ProductList: Всего страниц:', totalPages);
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      const newPage = currentPage + 1;
+      console.log('ProductList: Устанавливаем новую страницу:', newPage);
+      setCurrentPage(newPage);
+    } else {
+      console.log('ProductList: Нельзя перейти на следующую страницу, уже на последней');
     }
   };
 
   const handlePrevPage = () => {
+    console.log('ProductList: Нажата кнопка "Назад"');
+    console.log('ProductList: Текущая страница до обновления:', currentPage);
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      const newPage = currentPage - 1;
+      console.log('ProductList: Устанавливаем новую страницу:', newPage);
+      setCurrentPage(newPage);
+    } else {
+      console.log('ProductList: Нельзя вернуться назад, уже на первой странице');
     }
   };
 
+  // Обработчик изменения сортировки
   const handleSortChange = (e) => {
+    console.log('ProductList: Изменение сортировки:', e.target.value);
     setSortOrder(e.target.value);
-    setCurrentPage(1);
+    // setCurrentPage(1) теперь обрабатывается через useEffect
   };
 
+  // Эффект для плавной прокрутки списка продуктов наверх при смене страницы
   useEffect(() => {
     if (productListRef.current) {
+      console.log('ProductList: Прокрутка списка продуктов наверх');
       productListRef.current.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     }
-  }, [currentPage, sortOrder]);
+  }, [currentPage]);
+
+  // Лог для проверки рендера пагинации
+  useEffect(() => {
+    console.log('ProductList: JSX пагинации - Страница:', currentPage, 'из', totalPages);
+  }, [currentPage, totalPages]);
 
   return (
     <div className="product-list-container">
+      {/* Блок сортировки */}
       {filteredProducts.length > 0 && (
         <div className="sort-controls">
           <label htmlFor="sort-select">Сортировать по цене: </label>
@@ -66,32 +117,38 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
           </select>
         </div>
       )}
+
+      {/* Список продуктов */}
       <div className="product-list" ref={productListRef}>
         {currentProducts.length > 0 ? (
-          currentProducts.map(product => (
+          currentProducts.map((product) => (
             <ProductCard key={product.id} product={product} view="grid" />
           ))
         ) : (
           <p>Товары отсутствуют.</p>
         )}
       </div>
-      {filteredProducts.length > 0 && (
+
+      {/* Пагинация */}
+      {filteredProducts.length > 0 && totalPages > 1 && (
         <div className="pagination">
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            className="pagination-button"
-          >
-            Предыдущая
-          </button>
-          <span>Страница {currentPage} из {totalPages}</span>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className="pagination-button"
-          >
-            Следующая
-          </button>
+          <div className="pagination-inner">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="pagination-button"
+            >
+              Назад
+            </button>
+            <span>Страница {currentPage} из {totalPages}</span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="pagination-button"
+            >
+              Вперёд
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -1,4 +1,17 @@
+.category-title {
+  text-align: center; /* Выравнивание заголовка вправо */
+  font-size: 24px; /* Фиксированный размер шрифта */
+  color: #ffffff00; /* Тёмный цвет для контраста */
+  margin: 20px 20px 10px; /* Отступы для аккуратного размещения */
+  font-weight: bold;
+}
 
+.category-description {
+  text-align: center; /* Выравнивание описания вправо */
+  font-size: 16px; /* Фиксированный размер шрифта */
+  color: #ffffff00; /* Серый цвет для описания */
+  margin: 0 20px 20px; /* Отступы */
+}
 
 .pagination {
   display: flex;
@@ -54,8 +67,6 @@
   border-color: #a77b9a;
 }
 
-
-
 @media (max-width: 768px) {
   .product-list-container {
     width: 100%; /* На мобильных занимает всю ширину */
@@ -82,6 +93,18 @@
     width: 100%;
     max-width: 300px;
   }
+
+  .category-title {
+    text-align: right; /* Сохраняем выравнивание вправо */
+    font-size: 20px; /* Чуть меньший шрифт для планшетов */
+    margin: 15px 15px 8px; /* Уменьшенные отступы */
+  }
+
+  .category-description {
+    text-align: right; /* Сохраняем выравнивание вправо */
+    font-size: 14px; /* Чуть меньший шрифт для планшетов */
+    margin: 0 15px 15px; /* Уменьшенные отступы */
+  }
 }
 
 @media (max-width: 480px) {
@@ -101,5 +124,17 @@
   .sort-controls select {
     font-size: 14px;
     padding: 6px;
+  }
+
+  .category-title {
+    text-align: right; /* Сохраняем выравнивание вправо */
+    font-size: 18px; /* Ещё меньший шрифт для мобильных */
+    margin: 10px 10px 5px; /* Минимальные отступы */
+  }
+
+  .category-description {
+    text-align: right; /* Сохраняем выравнивание вправо */
+    font-size: 12px; /* Ещё меньший шрифт для мобильных */
+    margin: 0 10px 10px; /* Минимальные отступы */
   }
 }
