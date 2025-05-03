@@ -102,7 +102,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-home-container">
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -114,7 +114,7 @@ const Layout = () => {
       </Helmet>
       <Header />
       {!isHomePage && !isCatalogPage && !isCartPage && window.innerWidth > 768 && <Navigation />}
-      <main className="main-content">
+      <main className="app-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />

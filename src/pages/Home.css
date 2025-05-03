@@ -1,11 +1,13 @@
-body { 
+/* Основной контейнер страницы */
+.home-body {
   margin: 0;
   touch-action: none;
   overflow: hidden;
   user-select: none;
 }
 
-canvas {
+/* Стили для холста */
+.home-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -15,30 +17,26 @@ canvas {
   z-index: 0;
 }
 
-.home-container {
+/* Контейнер домашней страницы */
+.home-home-container {
   position: relative;
   width: 100vw;
-  height: 100vh; /* Исправлено: заменено | на : */
+  height: 100vh;
   overflow: visible;
 }
 
-.content-wrapper {
+/* Обертка содержимого */
+.home-content-wrapper {
   position: relative;
   display: flex;
+  flex-direction: row;
   width: 100vw;
   height: 100vh;
   z-index: 1;
 }
 
-.left-half {
-  width: 50vw;
-  height: 100vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.right-half {
+/* Левая половина (изображение) */
+.home-left-half {
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -46,165 +44,162 @@ canvas {
   align-items: center;
 }
 
-main {
+/* Правая половина (текст) */
+.home-right-half {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+/* Основной контейнер текста */
+.home-main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  max-width: 90%;
   padding: 2vmin;
   box-sizing: border-box;
 }
 
-.text-overlay {
+/* Наложение текста */
+.home-text-overlay {
   position: relative;
   z-index: 2;
 }
 
-.home-container article {
+/* Стили статьи */
+.home-home-container .home-article {
   position: relative;
   width: 18ch;
-  font: bold 2vmin/1 system-ui;
+  font: bold 2vmin/1.2 system-ui;
   color: #f9d0f1;
   text-rendering: optimizeLegibility;
   margin-bottom: 4vmin;
   text-align: left;
 }
 
-.home-container article > h2 {
-  font-size: 12vmin;
+/* Заголовок статьи */
+.home-home-container .home-article > h2 {
+  font-size: 10vmin;
   margin: 0;
   line-height: 1.2;
-  margin-left: -15vw;
 }
 
-.image-container {
-  width: 110vw;
+/* Контейнер изображения */
+.home-image-container {
+  width: 80%;
   height: auto;
   margin: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: hidden;
 }
 
-.image-container img {
+/* Изображение в контейнере */
+.home-image-container img {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-.categories-list {
-  display: none; /* Скрываем категории в веб-версии */
+/* Список категорий */
+.home-categories-list {
+  display: none;
 }
 
+/* Адаптивные стили для экранов до 600px */
 @media screen and (max-width: 600px) {
-  :root {
-    --image-offset: 5%; /* Изменяйте это значение в процентах для смещения картинки вправо */
-  }
-
-  .content-wrapper {
-    flex-direction: column;
-    position: relative;
-  }
-
-  .left-half {
-    width: 100vw;
-    height: 100vh;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: relative;
-    z-index: 2;
-    transform: translateX(-40px);
-  }
-
-  .right-half {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  .home-content-wrapper {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+  }
+  .home-left-half {
+    width: 50vw;
+    height: 100vh;
+    justify-content: center;
     align-items: center;
-    padding-right: var(--image-offset);
+    z-index: 1;
   }
-
-  .image-container {
-    width: 80vw;
-    height: 80vw;
+  .home-right-half {
+    width: 50vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    z-index: 2;
   }
-
-  main {
-    align-items: flex-start;
-    padding: 5vmin;
+  .home-image-container {
+    width: 90%;
+    height: auto;
   }
-
-  .home-container article {
-    font: bold 5vmin/1 system-ui;
+  .home-main {
+    max-width: 95%;
+    padding: 2vmin;
   }
-
-  .home-container article > h2 {
-    font-size: 13vmin;
-    margin-left: -12vw;
+  .home-home-container .home-article {
+    font: bold 3vmin/1.2 system-ui;
+    width: 100%;
+  }
+  .home-home-container .home-article > h2 {
+    font-size: 6vmin;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-
-  .categories-list {
-    display: block; /* Показываем категории в мобильной версии */
+  .home-categories-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
-    bottom: -62%;
+    bottom: 0;
     left: 0;
-    transform: translateX(40px);
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 10;
-    padding: 2vmin 0;
+    padding: 1vmin 0;
   }
-
-  .categories-title {
-    font-size: 4vmin;
+  .home-categories-title {
+    font-size: 3vmin;
     color: #ffffff;
-    padding: 2vmin 4vmin;
-    border-bottom: 2px solid #44444400;
-    margin-bottom: 2vmin;
+    padding: 1vmin;
+    margin-bottom: 0.5vmin;
+    text-align: center;
   }
-
-  .categories-list a {
+  .home-categories-list a {
     display: block;
-    padding: 2vmin 4vmin;
+    padding: 1vmin 3vmin;
     color: #ffffff;
     text-decoration: none;
-    font-size: 5vmin;
+    font-size: 3vmin;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
   }
-
-  .categories-list a:hover,
-  .categories-list a.active {
+  .home-categories-list a:hover,
+  .home-categories-list a.active {
     background-color: #555555;
     color: #ffffff;
   }
 }
 
+/* Адаптивные стили для экранов до 400px */
 @media screen and (max-width: 400px) {
-  .image-container {
-    width: 90vw;
-    height: 90vw;
+  .home-image-container {
+    width: 95%;
   }
-
-  .home-container article > h2 {
-    font-size: 10vmin;
+  .home-home-container .home-article {
+    font: bold 2.5vmin/1.2 system-ui;
   }
-
-  .categories-title {
-    font-size: 3.5vmin;
+  .home-home-container .home-article > h2 {
+    font-size: 5vmin;
   }
-
-  .categories-list {
-    bottom: -82%; /* Сохранено то же значение для согласованности */
+  .home-categories-title {
+    font-size: 2.5vmin;
   }
-
-  .categories-list a {
-    font-size: 3vmin;
-    padding: 1.5vmin 3vmin;
+  .home-categories-list a {
+    font-size: 2.5vmin;
+    padding: 0.8vmin 2vmin;
   }
 }

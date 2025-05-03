@@ -5,8 +5,7 @@ import image4 from './44.jpg';
 
 // Фрагментный шейдер
 const fragmentShader = `#version 300 es
-/*********made by Matthias Hurrle (@atzedent)
-*/   
+/*********made by Matthias Hurrle (@atzedent)*/
 precision highp float;
 out vec4 O;
 uniform float time;
@@ -166,7 +165,7 @@ const articles = [
 // Массив картинок
 const images = [image4];
 
-// Список категорий (перенесено из Header.js)
+// Список категорий
 const categories = [
   { path: '/catalog/all', name: 'Загальний роздiл' },
   { path: '/catalog/category1', name: 'Бокси' },
@@ -215,20 +214,20 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-container">
-      <canvas id="canvas" ref={canvasRef}></canvas>
-      <div className="content-wrapper">
-        <div className="left-half">
-          <main className="text-overlay">
+    <div className="home-home-container">
+      <canvas id="canvas" ref={canvasRef} className="home-canvas"></canvas>
+      <div className="home-content-wrapper">
+        <div className="home-left-half">
+          <main className="home-text-overlay">
             {articles.map((article, index) => (
-              <article key={index}>
+              <article key={index} className="home-article">
                 <h2>{article.title}</h2>
               </article>
             ))}
             {/* Категории в мобильной версии под текстом */}
-            {window.innerWidth <= 768 && location.pathname === '/' && (
-              <div className="categories-list">
-                <span className="categories-title">Категорії товарів</span>
+            {window.innerWidth <= 600 && location.pathname === '/' && (
+              <div className="home-categories-list">
+                <span className="home-categories-title">Категорії товарів</span>
                 {categories.map((category) => (
                   <Link
                     key={category.path}
@@ -242,8 +241,8 @@ const Home = () => {
             )}
           </main>
         </div>
-        <div className="right-half">
-          <div className="image-container">
+        <div className="home-right-half">
+          <div className="home-image-container">
             <img src={images[0]} alt="Картинка" />
           </div>
         </div>
