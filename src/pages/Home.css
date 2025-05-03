@@ -152,7 +152,7 @@ main {
   .categories-list {
     display: block; /* Показываем категории в мобильной версии */
     position: fixed;
-    bottom: -82%;
+    bottom: -62%;
     left: 0;
     transform: translateX(40px);
     width: 100%;

@@ -228,7 +228,7 @@ const Home = () => {
             {/* Категории в мобильной версии под текстом */}
             {window.innerWidth <= 768 && location.pathname === '/' && (
               <div className="categories-list">
-                <span className="categories-title">Категории</span>
+                <span className="categories-title">Категорії товарів</span>
                 {categories.map((category) => (
                   <Link
                     key={category.path}

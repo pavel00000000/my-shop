@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaThList, FaShoppingCart, FaBars } from 'react-icons/fa';
+import { FaHome, FaThList, FaShoppingCart, FaBars, FaInstagram, FaTelegram, FaPhone } from 'react-icons/fa';
 import { CartContext } from '../context/CartContext';
 import './Header.css';
 import logo from './logo.jpg';
@@ -49,6 +49,19 @@ const Header = () => {
     console.log('Header.js: NOT rendering categories-submenu');
   }
 
+  // Функции для открытия ссылок
+  const openInstagram = () => {
+    window.open('https://www.instagram.com/yourprofile', '_blank');
+  };
+
+  const openTelegram = () => {
+    window.open('https://t.me/yourprofile', '_blank');
+  };
+
+  const callPhone = () => {
+    window.location.href = 'tel:+1234567890';
+  };
+
   return (
     <header className="header">
       <Link to="/" className="logo-link" aria-label="Логотип - на главную">
@@ -89,7 +102,33 @@ const Header = () => {
               ))}
             </div>
           )}
+          {/* Социальные иконки для мобильной версии в бургер-меню */}
+          {isMenuOpen && (
+            <div className="mobile-social-icons">
+              <button className="mobile-social-icon" onClick={openInstagram} aria-label="Instagram">
+                <FaInstagram style={{ color: '#C13584' }} />
+              </button>
+              <button className="mobile-social-icon" onClick={openTelegram} aria-label="Telegram">
+                <FaTelegram style={{ color: '#0088cc' }} />
+              </button>
+              <button className="mobile-social-icon" onClick={callPhone} aria-label="Позвонить">
+                <FaPhone style={{ color: '#4CAF50' }} />
+              </button>
+            </div>
+          )}
         </nav>
+        {/* Социальные иконки для десктопной версии */}
+        <div className="social-icons">
+          <button className="social-icon" onClick={openInstagram} aria-label="Instagram">
+            <FaInstagram style={{ color: '#C13584' }} />
+          </button>
+          <button className="social-icon" onClick={openTelegram} aria-label="Telegram">
+            <FaTelegram style={{ color: '#0088cc' }} />
+          </button>
+          <button className="social-icon" onClick={callPhone} aria-label="Позвонить">
+            <FaPhone style={{ color: '#4CAF50' }} />
+          </button>
+        </div>
       </div>
     </header>
   );
