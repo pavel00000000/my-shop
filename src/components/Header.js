@@ -103,7 +103,7 @@ const Header = () => {
             </div>
           )}
           {/* Социальные иконки для мобильной версии в бургер-меню */}
-          {isMenuOpen && (
+          {isMenuOpen && !shouldRenderSubmenu && (
             <div className="mobile-social-icons">
               <button className="mobile-social-icon" onClick={openInstagram} aria-label="Instagram">
                 <FaInstagram style={{ color: '#C13584' }} />
@@ -118,17 +118,19 @@ const Header = () => {
           )}
         </nav>
         {/* Социальные иконки для десктопной версии */}
-        <div className="social-icons">
-          <button className="social-icon" onClick={openInstagram} aria-label="Instagram">
-            <FaInstagram style={{ color: '#C13584' }} />
-          </button>
-          <button className="social-icon" onClick={openTelegram} aria-label="Telegram">
-            <FaTelegram style={{ color: '#0088cc' }} />
-          </button>
-          <button className="social-icon" onClick={callPhone} aria-label="Позвонить">
-            <FaPhone style={{ color: '#4CAF50' }} />
-          </button>
-        </div>
+        {!isMenuOpen && window.innerWidth > 768 && (
+          <div className="social-icons">
+            <button className="social-icon" onClick={openInstagram} aria-label="Instagram">
+              <FaInstagram style={{ color: '#C13584' }} />
+            </button>
+            <button className="social-icon" onClick={openTelegram} aria-label="Telegram">
+              <FaTelegram style={{ color: '#0088cc' }} />
+            </button>
+            <button className="social-icon" onClick={callPhone} aria-label="Позвонить">
+              <FaPhone style={{ color: '#4CAF50' }} />
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

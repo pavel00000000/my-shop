@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { CartContext } from '../context/CartContext';
-import Confetti from 'react-confetti';
+import { useNavigate } from 'react-router-dom';
 import './Cart.css';
-import { useParams, Link, useNavigate } from 'react-router-dom';
 
 // Определяем базовый URL для API в зависимости от окружения
 const API_BASE_URL = process.env.NODE_ENV === 'production'

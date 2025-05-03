@@ -99,18 +99,22 @@ const Catalog = () => {
         <link rel="canonical" href={`https://my-shop-7mpy.onrender.com/catalog/${category}`} />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
-      {window.innerWidth > 768 && <Navigation />}
-      <h1 className="category-title">{meta.name}</h1>
-      <p className="category-description">{meta.description}</p>
-      <ProductList
-        key={category} // Принудительный перерендер при смене категории
-        category={category}
-        productsPerPage={currentCategory.productsPerPage}
-      />
-      <div className="cta-section">
-        <Link to="/catalog" className="cta-button">
-          
-        </Link>
+      <div className="navigation-container">
+        <Navigation />
+      </div>
+      <div className="product-list-container">
+        <h1 className="category-title">{meta.name}</h1>
+        <p className="category-description">{meta.description}</p>
+        <ProductList
+          key={category} // Принудительный перерендер при смене категории
+          category={category}
+          productsPerPage={currentCategory.productsPerPage}
+        />
+        <div className="cta-section">
+          <Link to="/catalog" className="cta-button">
+            Переглянути всі категорії
+          </Link>
+        </div>
       </div>
     </div>
   );

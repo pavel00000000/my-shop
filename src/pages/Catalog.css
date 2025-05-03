@@ -1,139 +1,74 @@
+.catalog-container {
+  display: flex; /* Располагаем навигацию и контент бок о бок */
+  width: 100%;
+  min-height: 100vh; /* Для полноэкранного отображения */
+}
+
+.navigation-container {
+  width: 15%; /* Навигация занимает 15% ширины */
+  background: #d3d3d3; /* Серый фон */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.product-list-container {
+  width: 85%; /* Остальная часть экрана */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .category-title {
-  text-align: center; /* Выравнивание заголовка вправо */
+  text-align: center; /* Выравнивание заголовка по центру */
   font-size: 24px; /* Фиксированный размер шрифта */
-  color: #ffffff00; /* Тёмный цвет для контраста */
+  color: #333; /* Тёмный цвет для контраста */
   margin: 20px 20px 10px; /* Отступы для аккуратного размещения */
   font-weight: bold;
 }
 
 .category-description {
-  text-align: center; /* Выравнивание описания вправо */
+  text-align: center; /* Выравнивание описания по центру */
   font-size: 16px; /* Фиксированный размер шрифта */
-  color: #ffffff00; /* Серый цвет для описания */
+  color: #666; /* Серый цвет для описания */
   margin: 0 20px 20px; /* Отступы */
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-  width: 100%;
-}
-
-.pagination-button {
-  padding: 8px 16px;
-  background: #c49bbb;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.pagination-button:disabled {
-  background: #888888;
-  cursor: not-allowed;
-}
-
-.sort-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 400px;
-  justify-content: center;
-}
-
-.sort-controls label {
-  font-size: 16px;
-  color: #333;
-}
-
-.sort-controls select {
-  padding: 8px;
-  border: 1px solid #c49bbb;
-  border-radius: 4px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-.sort-controls select:focus {
-  outline: none;
-  border-color: #a77b9a;
-}
-
 @media (max-width: 768px) {
+  .catalog-container {
+    flex-direction: column; /* На мобильных устройствах контент в столбец */
+  }
+
+  .navigation-container {
+    width: 100%; /* Навигация занимает всю ширину */
+    padding: 10px;
+  }
+
   .product-list-container {
     width: 100%; /* На мобильных занимает всю ширину */
-    margin-left: 0; /* Убираем сдвиг, так как навигация не отображается */
-  }
-
-  .product-list {
-    grid-template-columns: 1fr; /* Одна карточка в ряд */
-    max-height: 66vh;
-    overflow-y: auto;
-  }
-
-  .pagination {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .sort-controls {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sort-controls select {
-    width: 100%;
-    max-width: 300px;
+    padding: 10px;
   }
 
   .category-title {
-    text-align: right; /* Сохраняем выравнивание вправо */
+    text-align: center; /* Выравнивание по центру на мобильных */
     font-size: 20px; /* Чуть меньший шрифт для планшетов */
     margin: 15px 15px 8px; /* Уменьшенные отступы */
   }
 
   .category-description {
-    text-align: right; /* Сохраняем выравнивание вправо */
+    text-align: center; /* Выравнивание по центру на мобильных */
     font-size: 14px; /* Чуть меньший шрифт для планшетов */
     margin: 0 15px 15px; /* Уменьшенные отступы */
   }
 }
 
 @media (max-width: 480px) {
-  .product-list {
-    padding: 0 10px;
-    max-height: 55vh;
-  }
-
-  .product-list .product-card {
-    width: 100%;
-  }
-
-  .sort-controls label {
-    font-size: 14px;
-  }
-
-  .sort-controls select {
-    font-size: 14px;
-    padding: 6px;
-  }
-
   .category-title {
-    text-align: right; /* Сохраняем выравнивание вправо */
+    text-align: center; /* Выравнивание по центру */
     font-size: 18px; /* Ещё меньший шрифт для мобильных */
     margin: 10px 10px 5px; /* Минимальные отступы */
   }
 
   .category-description {
-    text-align: right; /* Сохраняем выравнивание вправо */
+    text-align: center; /* Выравнивание по центру */
     font-size: 12px; /* Ещё меньший шрифт для мобильных */
     margin: 0 10px 10px; /* Минимальные отступы */
   }
