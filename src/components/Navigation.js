@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import './Navigation.css';
 
 const categories = [
@@ -15,19 +16,65 @@ const categories = [
 
 const Navigation = () => {
   const { category = 'all' } = useParams();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Отслеживание изменения размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      console.log('Navigation.js: Window resized, isMobile =', mobile);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    console.log('Navigation.js: toggleMenu called, isOpen =', !isOpen);
+  };
 
   return (
-    <nav className="navigation">
-      <ul className="navigation-list">
-        {categories.map((cat) => (
-          <li
-            key={cat.id}
-            className={`navigation-item ${cat.id === category ? 'active' : ''}`}
+    <nav className="navigation-navigation">
+      {isMobile ? (
+        <div className={`navigation-mobile-container ${isOpen ? 'open' : ''}`}>
+          <button
+            className="navigation-toggle-button"
+            onClick={toggleMenu}
+            aria-label={isOpen ? 'Згорнути категорії' : 'Розгорнути категорії'}
           >
-            <Link to={`/catalog/${cat.id}`}>{cat.name}</Link>
-          </li>
-        ))}
-      </ul>
+            Категорії {isOpen ? <FiChevronDown size={16} /> : <FiChevronUp size={16} />}
+          </button>
+          <ul className="navigation-navigation-list">
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`navigation-navigation-item ${
+                  cat.id === category ? 'active' : ''
+                }`}
+              >
+                <Link to={`/catalog/${cat.id}`} onClick={() => setIsOpen(false)}>
+                  {cat.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <ul className="navigation-navigation-list">
+          {categories.map((cat) => (
+            <li
+              key={cat.id}
+              className={`navigation-navigation-item ${
+                cat.id === category ? 'active' : ''
+              }`}
+            >
+              <Link to={`/catalog/${cat.id}`}>{cat.name}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 };
