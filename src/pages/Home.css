@@ -24,22 +24,22 @@
   z-index: 0; /* Отправляем холст под все слои */
 }
 
-/* Контейнер домашней страницы */
 .home-home-container {
-  position: relative; /* Относительное позиционирование */
-  width: 100vw; /* Занимает всю ширину экрана */
-  height: calc(100vh - 60px); /* Уменьшаем высоту на размер хедера */
-  overflow: visible; /* Разрешаем выход вложенного контента */
+  position: relative;            /* Относительное позиционирование */
+  width: 100vw;                  /* Занимает всю ширину экрана */
+  height: calc(100vh - 60px);    /* Уменьшаем высоту на размер хедера */
+  overflow: visible;             /* Разрешаем выход вложенного контента */
 }
+
 
 /* Обертка содержимого */
 .home-content-wrapper {
-  position: relative; /* Относительное позиционирование */
-  display: flex; /* Flex-контейнер для горизонтального размещения */
-  flex-direction: row; /* Элементы располагаются в строку */
-  width: 100vw; /* Занимает всю ширину экрана */
-  height: calc(100vh - 60px); /* Уменьшаем высоту на размер хедера */
-  z-index: 1; /* Размещаем выше фона */
+  position: relative;            /* Относительное позиционирование */
+  display: flex;                 /* Flex-контейнер для горизонтального размещения */
+  flex-direction: row;           /* Элементы располагаются в строку */
+  width: 100vw;                  /* Занимает всю ширину экрана */
+  height: calc(100vh - 60px);    /* Уменьшаем высоту на размер хедера */
+  z-index: 1;                    /* Размещаем выше фона */
 }
 
 /* Левая половина (текст) */
@@ -79,7 +79,7 @@
 .home-home-container .home-article {
   position: relative; /* Относительное позиционирование */
   width: 18ch; /* Ширина в символах */
-  font: bold 7vmin/1.2 system-ui; /* Шрифт: жирный, размер 7vmin, межстрочный интервал */
+  font: bold 7vmin/1.2 system-ui; /* Шрифт: жирный, размер 2vmin, межстрочный интервал */
   color: #ffb5f0; /* Цвет текста */
   text-rendering: optimizeLegibility; /* Улучшенная читаемость */
   margin-bottom: 4vmin; /* Отступ снизу */
@@ -139,7 +139,7 @@
   }
 
   .home-image-container {
-    width: 100%; /* Увеличение на 20% (с 90% до 100%) */
+    width: 90%; /* Уменьшение изображения на 10% */
     max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
     max-height: 40vh; /* Фиксированная высота для единообразия */
     margin-top: 0; /* Убираем верхний отступ */
@@ -207,7 +207,7 @@
 /* Адаптивные стили для экранов до 480px (маленькие мобильные устройства) */
 @media screen and (max-width: 480px) {
   .home-image-container {
-    width: 100%; /* Увеличение на 20% (с 90% до 100%) */
+    width: 90%; /* Уменьшение изображения на 10% */
     max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
     max-height: 40vh; /* Фиксированная высота для единообразия */
     margin-top: 0; /* Убираем верхний отступ */
@@ -308,11 +308,10 @@
   }
 
   .home-left-half {
-    width: 70vw; /* Увеличено для размещения текста */
+    width: 50vw; /* Половина ширины */
     display: flex;
-    justify-content: flex-start; /* Сдвигаем текст влево */
+    justify-content: center;
     align-items: center;
-    padding-left: 5vw; /* Отступ слева для сдвига */
   }
 
   .home-right-half {
@@ -331,18 +330,16 @@
   .home-main {
     max-width: 90%;
     padding: 2vmin;
-    margin-right: 5vw; /* Отступ справа для расстояния от картинки */
   }
 
   .home-home-container .home-article {
-    font: bold 3vmin/1.2 system-ui; /* Увеличение в 1.5 раза (2vmin × 1.5) */
+    font: bold 2vmin/1.2 system-ui;
     width: 18ch;
     text-align: left;
-    color: #ffb5f0;
   }
 
   .home-home-container .home-article > h2 {
-    font-size: 15vmin; /* Увеличение в 1.5 раза (10vmin × 1.5) */
+    font-size: 10vmin;
     text-align: left;
   }
 

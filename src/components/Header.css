@@ -189,13 +189,14 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 30px;            /* Сдвигаем меню на 30 пикселей выше */
+    top: 30px;
     left: 0;
-    right: 0;
+    width: calc(100% + 30px); /* Увеличиваем ширину */
     background-color: #333333;
     padding: 20px;
     z-index: 999;
   }
+  
   
 
   .header-nav.open a {
