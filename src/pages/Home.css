@@ -113,56 +113,67 @@
   .home-content-wrapper {
     position: relative; /* Для абсолютного позиционирования текста */
     display: flex;
-    flex-direction: row; /* По-прежнему в строку */
+    flex-direction: column; /* Элементы в столбец для наложения */
     width: 100vw;
     height: 100vh;
-    transform: translateY(10%); /* Подъем содержимого вверх на 10% для мобильных */
+    transform: translateY(0); /* Убираем смещение вверх */
   }
+
   .home-left-half {
-    width: 50vw;
+    position: absolute; /* Абсолютное позиционирование для текста */
+    top: 0; /* Привязка к верхней части экрана */
+    left: 0; /* Начинается с левого края */
+    width: 100vw; /* Полная ширина */
+    height: auto; /* Автоматическая высота */
+    display: flex;
     justify-content: center;
     align-items: flex-start; /* Выравнивание по верхнему краю */
-    z-index: 1;
-    transform: translateX(35%); /* Смещение изображения ближе к тексту на 15% */
-  }
-  .home-right-half {
-    position: absolute; /* Абсолютное позиционирование для перекрытия изображения */
-    left: 50%; /* Начинается с правой половины экрана */
-    width: 50vw; /* Половина ширины экрана */
-    justify-content: center;
-    align-items: flex-start; /* Выравнивание по верхнему краю */
-    overflow: auto;
     z-index: 3; /* Текст поверх изображения */
   }
+
+  .home-right-half {
+    width: 100vw; /* Полная ширина */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Центрирование по вертикали */
+    z-index: 1; /* Изображение под текстом */
+  }
+
   .home-image-container {
-    width: 140%; /* Увеличение изображения на 20% */
-    max-width: 100%; /* Ограничение, чтобы не выходило за контейнер */
+    width: 90%; /* Уменьшение изображения на 10% */
+    max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
     max-height: 50vh; /* Ограничение высоты изображения */
   }
+
   .home-main {
     max-width: 95%;
     padding: 1.5vmin;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для читаемости текста */
   }
+
   .home-home-container .home-article {
     font: bold 4.6vmin/1.2 system-ui; /* Увеличение шрифта на 20% */
-    width: 100%;
+    width: 100%; /* Полная ширина для перекрытия */
   }
+
   .home-home-container .home-article > h2 {
     font-size: 7.2vmin; /* Увеличение заголовка на 20% */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
+
   .home-categories-list {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
-    bottom: 0;
+    bottom: 0; /* Закрепление в нижней части экрана */
     left: 0;
     width: 100%;
     background-color: rgba(255, 181, 246, 0.351);
-    z-index: 10;
+    z-index: 10; /* Поверх всех элементов */
     padding: 1vmin 0;
   }
+
   .home-categories-title {
     font-size: 3vmin;
     color: #ffffff;
@@ -170,6 +181,7 @@
     margin-bottom: 0.5vmin;
     text-align: center;
   }
+
   .home-categories-list a {
     display: block;
     padding: 1vmin 3vmin;
@@ -179,6 +191,7 @@
     font-family: 'Roboto', sans-serif;
     text-align: center;
   }
+
   .home-categories-list a:hover,
   .home-categories-list a.active {
     background-color: #555555;
@@ -189,19 +202,30 @@
 /* Адаптивные стили для экранов до 400px */
 @media screen and (max-width: 400px) {
   .home-image-container {
-    width: 123%; /* Увеличение изображения на 20% */
-    max-width: 100%; /* Ограничение, чтобы не выходило за контейнер */
+    width: 90%; /* Уменьшение изображения на 10% */
+    max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
     max-height: 45vh;
   }
+
   .home-home-container .home-article {
     font: bold 3vmin/1.2 system-ui; /* Увеличение шрифта на 20% */
   }
+
   .home-home-container .home-article > h2 {
-    font-size: 9vmin; /* Увеличение заголовка на 20% */
+    font-size: 12vmin;         /* Увеличение размера заголовка */
+    margin: 9vmin 0 0 0;       /* Отступ сверху 5vmin, остальные — 0 */
+    padding: 0;                /* Удаление внутренних отступов */
+    text-align: left;          /* Выравнивание текста по левому краю */
+    width: 100vw;              /* Заголовок занимает всю ширину экрана */
+    box-sizing: border-box;   /* Учёт padding в ширине */
   }
+  
+  
+
   .home-categories-title {
     font-size: 3vmin;
   }
+
   .home-categories-list a {
     font-size: 3vmin;
     padding: 0.8vmin 2vmin;
