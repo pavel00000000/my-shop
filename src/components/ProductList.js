@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProductCard from './ProductCard';
 import products from '../data/products.json'; // Импортируем сгенерированный products.json
-import './ProductList.css';
+import './ProductList.css'; // Импорт оригинального CSS-файла
 
 const ProductList = ({ category, productsPerPage = 10 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('none');
-  const productListRef = useRef(null);
+  const itemsGridRef = useRef(null);
 
   // Фильтрация продуктов по категории
   const filteredProducts =
@@ -90,9 +90,9 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
 
   // Эффект для плавной прокрутки списка продуктов наверх при смене страницы
   useEffect(() => {
-    if (productListRef.current) {
+    if (itemsGridRef.current) {
       console.log('ProductList: Прокрутка списка продуктов наверх');
-      productListRef.current.scrollTo({
+      itemsGridRef.current.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
@@ -105,10 +105,10 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
   }, [currentPage, totalPages]);
 
   return (
-    <div className="product-list-container">
+    <div className="iitems-grid-container">
       {/* Блок сортировки */}
       {filteredProducts.length > 0 && (
-        <div className="sort-controls">
+        <div className="sort-panel">
           <label htmlFor="sort-select">Сортировать по цене: </label>
           <select id="sort-select" value={sortOrder} onChange={handleSortChange}>
             <option value="none">Без сортировки</option>
@@ -119,7 +119,7 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
       )}
 
       {/* Список продуктов */}
-      <div className="product-list" ref={productListRef}>
+      <div className="items-grid" ref={itemsGridRef}>
         {currentProducts.length > 0 ? (
           currentProducts.map((product) => (
             <ProductCard key={product.id} product={product} view="grid" />
@@ -131,12 +131,12 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
 
       {/* Пагинация */}
       {filteredProducts.length > 0 && totalPages > 1 && (
-        <div className="pagination">
-          <div className="pagination-inner">
+        <div className="page-nav">
+          <div className="page-nav-inner">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 1}
-              className="pagination-button"
+              className="page-nav-button"
             >
               Назад
             </button>
@@ -144,7 +144,7 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="pagination-button"
+              className="page-nav-button"
             >
               Вперёд
             </button>

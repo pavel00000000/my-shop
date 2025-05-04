@@ -3,8 +3,19 @@
   --color-primary: #c5ff4a; /* Основной цвет, доступный для всех компонентов */
 }
 
-/* Список продуктов */
-.product-list {
+/* Контейнер списка товаров */
+.items-grid-container { /* Исправлено: убрана лишняя "i" */
+  width: 100%; /* Полная ширина */
+  margin: 0 auto; /* Центрирование контейнера */
+  padding: 20px; /* Внутренние отступы */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрирование дочерних элементов */
+}
+
+/* Список товаров */
+.items-grid {
   display: grid;
   grid-gap: 18px;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -15,67 +26,81 @@
   overflow-y: auto;
 }
 
-.product-list .product-card {
+.items-grid .item-block {
   flex: none;
   margin: 0 auto;
 }
 
 /* Адаптация сетки для десктопов */
 @media (min-width: 769px) {
-  .product-list {
+  .items-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 /* Пагинация */
-.pagination {
-  position: fixed; /* Закрепляем внизу экрана */
-  bottom: 0; /* Прилипает к нижней границе */
-  left: 15%; /* Учитываем ширину навигации (15%) */
-  width: 85%; /* Соответствует ширине .product-list-container */
+.page-nav {
   display: flex;
   justify-content: center; /* Центрирование внутреннего контейнера */
   align-items: center; /* Центрирование по вертикали */
   background: transparent; /* Прозрачный фон */
-  padding: 3.33px 0; /* Уменьшено в 3 раза (10px / 3) */
+  padding: 3.33px 0;
   box-sizing: border-box;
   z-index: 1000; /* Убедимся, что пагинация выше других элементов */
+  width: 85%; /* Соответствует ширине контейнера списка товаров */
+  margin-left: 15%; /* Учитываем ширину навигации (15%) */
 }
 
-.pagination-inner {
+/* Убираем фиксированное положение в веб-версии */
+@media (min-width: 769px) {
+  .page-nav {
+    position: static; /* Пагинация следует за контентом */
+    margin: 20px auto; /* Центрирование и отступ */
+  }
+}
+
+.page-nav-inner {
   display: flex;
   justify-content: center; /* Центрирование кнопок внутри */
   align-items: center; /* Вертикальное центрирование */
-  gap: 5px; /* Уменьшено в 3 раза (15px / 3) */
+  gap: 8px; /* Увеличен зазор для более крупных кнопок */
   max-width: 300px; /* Ограничиваем ширину содержимого */
   width: 100%; /* Занимает доступное пространство */
   margin: 0 auto; /* Центрирование внутреннего контейнера */
 }
 
-.pagination-button {
-  padding: 2.67px 3px; /* Уменьшен горизонтальный padding для более коротких кнопок */
-  background: #c49bbb;
+.page-nav-button {
+  padding: 8px 12px; /* Увеличены отступы для более крупных кнопок */
+  background: #c49bbb; /* Основной цвет фона */
   color: #ffffff;
-  border: none;
+  border: 1px solid #a77b9a; /* Добавлена граница для классического вида */
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 10px; /* Минимальный размер для читаемости */
+  transition: all 0.3s ease; /* Плавный переход для фона и тени */
+  font-size: 14px; /* Увеличен шрифт для читаемости */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для классического стиля */
 }
 
-.pagination-button:disabled {
+.page-nav-button:hover:not(:disabled) {
+  background: #a77b9a; /* Более тёмный оттенок при наведении */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Усиленная тень при наведении */
+}
+
+.page-nav-button:disabled {
   background: #888888;
+  border-color: #888888;
   cursor: not-allowed;
+  box-shadow: none; /* Убираем тень для отключённых кнопок */
 }
 
-.pagination span {
-  font-size: 10px; /* Минимальный размер для читаемости */
+.page-nav span {
+  font-size: 14px; /* Увеличен шрифт для согласованности */
   color: #333;
   font-weight: bold;
 }
 
 /* Сортировка */
-.sort-controls {
+.sort-panel {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -85,12 +110,20 @@
   justify-content: center;
 }
 
-.sort-controls label {
+/* Центрирование сортировки в веб-версии */
+@media (min-width: 769px) {
+  .sort-panel {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.sort-panel label {
   font-size: 16px;
   color: #333;
 }
 
-.sort-controls select {
+.sort-panel select {
   padding: 8px;
   border: 1px solid #c49bbb;
   border-radius: 4px;
@@ -100,88 +133,147 @@
   transition: border-color 0.3s ease;
 }
 
-.sort-controls select:focus {
+.sort-panel select:focus {
   outline: none;
   border-color: #a77b9a;
 }
 
-/* Адаптивный дизайн */
+/* Адаптивный дизайн для планшетов и телефонов */
 @media (max-width: 768px) {
-  .product-list {
+  .items-grid-container { /* Исправлено: убрана лишняя "i" */
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* Прокрутка всего контейнера */
+  }
+
+  .items-grid {
+    width: 100%;
+    display: grid;
     grid-template-columns: 1fr;
-    max-height: 66vh;
-    overflow-y: auto;
-    padding-bottom: 60px; /* Отступ снизу, чтобы контент не перекрывался пагинацией */
+    grid-gap: 18px;
+    padding-bottom: 100px; /* Отступ для фиксированной пагинации */
   }
 
-  .pagination {
-    left: 0; /* Нет навигации, начинаем с края */
-    width: 100%; /* Полная ширина */
-    padding: 2.67px 0; /* Уменьшено в 3 раза (8px / 3) */
+  .page-nav {
+    position: fixed; /* Фиксируем пагинацию внизу */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    background: transparent; /* Прозрачный фон */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
   }
 
-  .pagination-inner {
-    gap: 3.33px; /* Уменьшено в 3 раза (10px / 3) */
-    max-width: 250px; /* Уменьшенная ширина для планшетов */
+  .page-nav-inner {
+    display: flex;
+    justify-content: space-between; /* Кнопки по краям, текст в центре */
+    align-items: center;
+    gap: 6px;
+    max-width: 95%; /* Увеличено для лучшего распределения */
+    width: 100%; /* Занимает всю доступную ширину */
+    margin: 0 auto;
   }
 
-  .pagination-button {
-    padding: 2px 2.5px; /* Уменьшен горизонтальный padding */
-    font-size: 9px; /* Ещё меньший шрифт */
+  .page-nav-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    border: 1px solid #a77b9a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 80px; /* Минимальная ширина для кнопок */
+    text-align: center; /* Центрирование текста в кнопках */
   }
 
-  .pagination span {
-    font-size: 9px;
+  .page-nav-button:hover:not(:disabled) {
+    background: #a77b9a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
-  .sort-controls {
+  .page-nav span {
+    font-size: 12px;
+    flex: 1; /* Занимает оставшееся пространство */
+    text-align: center; /* Центрирование текста */
+    display: flex;
+    justify-content: center; /* Дополнительное центрирование */
+    align-items: center;
+  }
+
+  .sort-panel {
     flex-direction: column;
     gap: 8px;
-  }
-
-  .sort-controls select {
     width: 100%;
     max-width: 300px;
+    margin: 0 auto; /* Центрирование блока сортировки */
+  }
+
+  .sort-panel select {
+    width: 100%;
   }
 }
 
+/* Для маленьких экранов (телефоны) */
 @media (max-width: 480px) {
-  .product-list {
+  .items-grid-container { /* Исправлено: убрана лишняя "i" */
+    padding: 8px;
+  }
+
+  .items-grid {
     padding: 0 10px;
-    max-height: 55vh;
-    padding-bottom: 50px; /* Отступ снизу для пагинации */
+    padding-bottom: 120px; /* Больший отступ для пагинации */
   }
 
-  .product-list .product-card {
-    width: 100%;
-  }
-
-  .sort-controls label {
-    font-size: 14px;
-  }
-
-  .sort-controls select {
-    font-size: 14px;
-    padding: 6px;
-  }
-
-  .pagination {
+  .page-nav {
+    position: fixed; /* Фиксируем пагинацию внизу */
+    bottom: 0;
     left: 0;
     width: 100%;
-    padding: 2px 0; /* Уменьшено в 3 раза (6px / 3) */
+    padding: 5px 0;
+    background: transparent; /* Прозрачный фон */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
   }
 
-  .pagination-inner {
-    gap: 2.67px; /* Уменьшено в 3 раза (8px / 3) */
-    max-width: 200px; /* Уменьшенная ширина для мобильных */
+  .page-nav-inner {
+    display: flex;
+    justify-content: space-between; /* Кнопки по краям, текст в центре */
+    align-items: center;
+    gap: 5px;
+    max-width: 98%; /* Ещё больше для маленьких экранов */
+    width: 100%;
+    margin: 0 auto;
   }
 
-  .pagination-button {
-    padding: 1.67px 2px; /* Уменьшен горизонтальный padding */
-    font-size: 8px; /* Ещё меньший шрифт */
+  .page-nav-button {
+    padding: 5px 8px;
+    font-size: 11px;
+    border: 1px solid #a77b9a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 70px; /* Чуть меньше для маленьких экранов */
+    text-align: center;
   }
 
-  .pagination span {
-    font-size: 8px;
+  .page-nav-button:hover:not(:disabled) {
+    background: #a77b9a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-nav span {
+    font-size: 11px;
+    flex: 1; /* Занимает оставшееся пространство */
+    text-align: center; /* Центрирование текста */
+    display: flex;
+    justify-content: center; /* Дополнительное центрирование */
+    align-items: center;
+  }
+
+  .sort-panel label {
+    font-size: 14px;
+  }
+
+  .sort-panel select {
+    font-size: 14px;
+    padding: 6px;
   }
 }

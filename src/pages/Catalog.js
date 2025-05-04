@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Navigation from '../components/Navigation';
 import ProductList from '../components/ProductList';
@@ -110,11 +110,6 @@ const Catalog = () => {
           category={category}
           productsPerPage={currentCategory.productsPerPage}
         />
-        <div className="cta-section">
-          <Link to="/catalog" className="cta-button">
-            Переглянути всі категорії
-          </Link>
-        </div>
       </div>
     </div>
   );
