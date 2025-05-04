@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import ReactGA from 'react-ga4';
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"></link>
 
+
 // Инициализация Google Analytics 4
 ReactGA.initialize('G-XXXXXXXXXX'); // Замените на ваш Measurement ID
 

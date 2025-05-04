@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './Home.css';
 import image4 from './44.jpg';
 
-// Фрагментный шейдер
+// Фрагментный шейдер (без изменений, опущен для краткости)
 const fragmentShader = `#version 300 es
 /*********made by Matthias Hurrle (@atzedent)*/
 precision highp float;
@@ -58,7 +58,7 @@ void main() {
     O=vec4(col,1);
 }`.trim();
 
-// Класс Renderer
+// Класс Renderer (без изменений)
 class Renderer {
   #vertexSrc = "#version 300 es\nprecision highp float;\nin vec4 position;\nvoid main(){gl_Position=position;}";
   #vertices = [-1, 1, -1, -1, 1, 1, 1, -1];
@@ -224,27 +224,25 @@ const Home = () => {
                 <h2>{article.title}</h2>
               </article>
             ))}
-            {/* Категории в мобильной версии под текстом */}
-            {window.innerWidth <= 600 && location.pathname === '/' && (
-              <div className="home-categories-list">
-                <span className="home-categories-title">Категорії товарів</span>
-                {categories.map((category) => (
-                  <Link
-                    key={category.path}
-                    to={category.path}
-                    className={location.pathname === category.path ? 'active' : ''}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            )}
           </main>
         </div>
         <div className="home-right-half">
           <div className="home-image-container">
             <img src={images[0]} alt="Картинка" />
           </div>
+        </div>
+        {/* Категории вынесены из home-left-half */}
+        <div className="home-categories-list">
+          <span className="home-categories-title">Категорії товарів</span>
+          {categories.map((category) => (
+            <Link
+              key={category.path}
+              to={category.path}
+              className={location.pathname === category.path ? 'active' : ''}
+            >
+              {category.name}
+            </Link>
+          ))}
         </div>
       </div>
     </div>

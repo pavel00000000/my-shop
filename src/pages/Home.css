@@ -1,3 +1,10 @@
+/* Сброс стилей для единообразия */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Основной контейнер страницы */
 .home-body {
   margin: 0; /* Убираем внешние отступы у body */
@@ -35,7 +42,7 @@
   z-index: 1; /* Над холстом */
 }
 
-/* Левая половина (изображение) */
+/* Левая половина (текст) */
 .home-left-half {
   width: 50vw; /* Половина ширины */
   display: flex; /* Flex для центрирования содержимого */
@@ -43,7 +50,7 @@
   align-items: center; /* Центр по вертикали */
 }
 
-/* Правая половина (текст) */
+/* Правая половина (изображение) */
 .home-right-half {
   width: 50vw; /* Вторая половина ширины */
   display: flex; /* Flex-контейнер */
@@ -108,61 +115,59 @@
   display: none; /* Не отображается */
 }
 
-/* Адаптивные стили для экранов до 600px */
-@media screen and (max-width: 600px) {
+/* Адаптивные стили для экранов до 767px (средние мобильные устройства) */
+@media screen and (max-width: 767px) {
   .home-content-wrapper {
-    position: relative; /* Для абсолютного позиционирования текста */
+    position: relative; /* Для абсолютного позиционирования */
     display: flex;
-    flex-direction: column; /* Элементы в столбец для наложения */
+    flex-direction: column; /* Элементы в столбец */
     width: 100vw;
     height: 100vh;
     transform: translateY(0); /* Убираем смещение вверх */
   }
 
   .home-left-half {
-    position: absolute; /* Абсолютное позиционирование для текста */
-    top: 0; /* Привязка к верхней части экрана */
-    left: 0; /* Начинается с левого края */
-    width: 100vw; /* Полная ширина */
-    height: auto; /* Автоматическая высота */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Выравнивание по верхнему краю */
-    z-index: 3; /* Текст поверх изображения */
+    display: none; /* Удаляем текст на мобильных устройствах */
   }
 
   .home-right-half {
     width: 100vw; /* Полная ширина */
     display: flex;
-    justify-content: center;
-    align-items: center; /* Центрирование по вертикали */
-    z-index: 1; /* Изображение под текстом */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: flex-start; /* Прижимаем к верхнему краю */
+    z-index: 1; /* Изображение под категориями */
   }
 
   .home-image-container {
     width: 90%; /* Уменьшение изображения на 10% */
     max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
-    max-height: 50vh; /* Ограничение высоты изображения */
+    max-height: 40vh; /* Фиксированная высота для единообразия */
+    margin-top: 0; /* Убираем верхний отступ */
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: flex-start; /* Прижимаем к верхнему краю */
+  }
+
+  .home-image-container img {
+    width: 100%;
+    height: 100%; /* Заполняем контейнер по высоте */
+    object-fit: cover; /* Сохраняем пропорции с обрезкой */
   }
 
   .home-main {
-    max-width: 95%;
-    padding: 1.5vmin;
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для читаемости текста */
+    display: none; /* Удаляем текст */
   }
 
   .home-home-container .home-article {
-    font: bold 4.6vmin/1.2 system-ui; /* Увеличение шрифта на 20% */
-    width: 100%; /* Полная ширина для перекрытия */
+    display: none; /* Удаляем текст */
   }
 
   .home-home-container .home-article > h2 {
-    font-size: 7.2vmin; /* Увеличение заголовка на 20% */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: none; /* Удаляем текст */
   }
 
   .home-categories-list {
-    display: flex;
+    display: flex; /* Отображаем категории */
     flex-direction: column;
     align-items: center;
     position: fixed;
@@ -175,7 +180,7 @@
   }
 
   .home-categories-title {
-    font-size: 3vmin;
+    font-size: 7.5vmin; /* Увеличение в 2.5 раза */
     color: #ffffff;
     padding: 1vmin;
     margin-bottom: 0.5vmin;
@@ -187,7 +192,7 @@
     padding: 1vmin 3vmin;
     color: #ffffff;
     text-decoration: none;
-    font-size: 3vmin;
+    font-size: 7.5vmin; /* Увеличение в 2.5 раза */
     font-family: 'Roboto', sans-serif;
     text-align: center;
   }
@@ -199,35 +204,146 @@
   }
 }
 
-/* Адаптивные стили для экранов до 400px */
-@media screen and (max-width: 400px) {
+/* Адаптивные стили для экранов до 480px (маленькие мобильные устройства) */
+@media screen and (max-width: 480px) {
   .home-image-container {
     width: 90%; /* Уменьшение изображения на 10% */
     max-width: 100vw; /* Ограничение, чтобы не выходило за экран */
-    max-height: 45vh;
+    max-height: 40vh; /* Фиксированная высота для единообразия */
+    margin-top: 0; /* Убираем верхний отступ */
   }
 
-  .home-home-container .home-article {
-    font: bold 3vmin/1.2 system-ui; /* Увеличение шрифта на 20% */
+  .home-image-container img {
+    width: 100%;
+    height: 100%; /* Заполняем контейнер по высоте */
+    object-fit: cover; /* Сохраняем пропорции с обрезкой */
   }
-
-  .home-home-container .home-article > h2 {
-    font-size: 12vmin;         /* Увеличение размера заголовка */
-    margin: 9vmin 0 0 0;       /* Отступ сверху 5vmin, остальные — 0 */
-    padding: 0;                /* Удаление внутренних отступов */
-    text-align: left;          /* Выравнивание текста по левому краю */
-    width: 100vw;              /* Заголовок занимает всю ширину экрана */
-    box-sizing: border-box;   /* Учёт padding в ширине */
-  }
-  
-  
 
   .home-categories-title {
-    font-size: 3vmin;
+    font-size: 7.5vmin; /* Увеличение в 2.5 раза */
+    color: #ffffff;
+    padding: 1vmin;
+    margin-bottom: 0.5vmin;
+    text-align: center;
   }
 
   .home-categories-list a {
-    font-size: 3vmin;
-    padding: 0.8vmin 2vmin;
+    display: block;
+    padding: 1vmin 2vmin; /* Увеличен padding для читаемости */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 7.5vmin; /* Увеличение в 2.5 раза */
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+
+  .home-categories-list a:hover,
+  .home-categories-list a.active {
+    background-color: #555555;
+    color: #ffffff;
+  }
+}
+
+/* Адаптивные стили для планшетов (768px–991px) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .home-content-wrapper {
+    flex-direction: column; /* Элементы в столбец */
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .home-left-half {
+    width: 100vw; /* Полная ширина */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 3; /* Текст поверх изображения */
+  }
+
+  .home-right-half {
+    width: 100vw; /* Полная ширина */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Изображение под текстом */
+  }
+
+  .home-image-container {
+    width: 80%; /* Уменьшение изображения */
+    max-width: 100vw;
+    max-height: 50vh;
+  }
+
+  .home-main {
+    max-width: 95%;
+    padding: 2vmin;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center; /* Центрирование текста для планшетов */
+  }
+
+  .home-home-container .home-article {
+    font: bold 2.5rem/1.2 system-ui;
+    width: 100%;
+    text-align: center;
+  }
+
+  .home-home-container .home-article > h2 {
+    font-size: 4rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+
+  .home-categories-list {
+    display: none; /* Категории скрыты на планшетах */
+  }
+}
+
+/* Адаптивные стили для десктопов (992px и выше) */
+@media screen and (min-width: 992px) {
+  .home-content-wrapper {
+    flex-direction: row; /* Элементы в строку */
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .home-left-half {
+    width: 50vw; /* Половина ширины */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .home-right-half {
+    width: 50vw; /* Половина ширины */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .home-image-container {
+    width: 80%;
+    max-width: 100vw;
+    max-height: 80vh;
+  }
+
+  .home-main {
+    max-width: 90%;
+    padding: 2vmin;
+  }
+
+  .home-home-container .home-article {
+    font: bold 2vmin/1.2 system-ui;
+    width: 18ch;
+    text-align: left;
+  }
+
+  .home-home-container .home-article > h2 {
+    font-size: 10vmin;
+    text-align: left;
+  }
+
+  .home-categories-list {
+    display: none; /* Категории скрыты на десктопах */
   }
 }
