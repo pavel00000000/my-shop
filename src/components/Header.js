@@ -12,8 +12,11 @@ const Header = () => {
   const location = useLocation();
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    console.log('Header.js: toggleMenu called, isMenuOpen =', !isMenuOpen);
+    // Переключаем меню только на мобильной версии (≤768px)
+    if (window.innerWidth <= 768) {
+      setIsMenuOpen(!isMenuOpen);
+      console.log('Header.js: toggleMenu called, isMenuOpen =', !isMenuOpen);
+    }
   };
 
   // Сбрасываем isMenuOpen при изменении маршрута
@@ -63,32 +66,32 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <Link to="/" className="logo-link" aria-label="Логотип - на главную">
-        <img src={logo} alt="Логотип" className="logo" />
+    <header className="header-header">
+      <Link to="/" className="header-logo-link" aria-label="Логотип - на главную">
+        <img src={logo} alt="Логотип" className="header-logo" />
       </Link>
-      <div className="nav-container">
-        <button className="burger-menu" onClick={toggleMenu} aria-label="Открыть меню">
+      <div className="header-nav-container">
+        <button className="header-burger-menu" onClick={toggleMenu} aria-label="Открыть меню">
           <FaBars />
         </button>
-        <nav className={`nav ${isMenuOpen ? 'open' : ''}`} data-page={location.pathname}>
+        <nav className={`header-nav ${isMenuOpen ? 'open' : ''}`} data-page={location.pathname}>
           <Link to="/" aria-label="Главная страница" onClick={toggleMenu}>
-            <FaHome className="icon" />
+            <FaHome className="header-icon" />
             <span>Дом</span>
           </Link>
           <Link to="/catalog" aria-label="Каталог" onClick={toggleMenu}>
-            <FaThList className="icon" />
+            <FaThList className="header-icon" />
             <span>Каталог</span>
           </Link>
           <Link to="/cart" aria-label="Корзина" onClick={toggleMenu}>
-            <FaShoppingCart className="icon" />
-            {totalItems > 0 && <span className="cart-indicator">{totalItems}</span>}
+            <FaShoppingCart className="header-icon" />
+            {totalItems > 0 && <span className="header-cart-indicator">{totalItems}</span>}
             <span>Корзина</span>
           </Link>
           {/* Подменю категорий только в десктопной версии и не на странице корзины */}
           {shouldRenderSubmenu && (
-            <div className="categories-submenu">
-              <span className="submenu-title">Категории</span>
+            <div className="header-categories-submenu">
+              <span className="header-submenu-title">Категории</span>
               {categories.map((category) => (
                 <Link
                   key={category.path}
@@ -104,29 +107,29 @@ const Header = () => {
           )}
           {/* Социальные иконки для мобильной версии в бургер-меню */}
           {isMenuOpen && !shouldRenderSubmenu && (
-            <div className="mobile-social-icons">
-              <button className="mobile-social-icon" onClick={openInstagram} aria-label="Instagram">
+            <div className="header-mobile-social-icons">
+              <button className="header-mobile-social-icon" onClick={openInstagram} aria-label="Instagram">
                 <FaInstagram style={{ color: '#C13584' }} />
               </button>
-              <button className="mobile-social-icon" onClick={openTelegram} aria-label="Telegram">
+              <button className="header-mobile-social-icon" onClick={openTelegram} aria-label="Telegram">
                 <FaTelegram style={{ color: '#0088cc' }} />
               </button>
-              <button className="mobile-social-icon" onClick={callPhone} aria-label="Позвонить">
+              <button className="header-mobile-social-icon" onClick={callPhone} aria-label="Позвонить">
                 <FaPhone style={{ color: '#4CAF50' }} />
               </button>
             </div>
           )}
         </nav>
         {/* Социальные иконки для десктопной версии */}
-        {!isMenuOpen && window.innerWidth > 768 && (
-          <div className="social-icons">
-            <button className="social-icon" onClick={openInstagram} aria-label="Instagram">
+        {window.innerWidth > 768 && (
+          <div className="header-social-icons">
+            <button className="header-social-icon" onClick={openInstagram} aria-label="Instagram">
               <FaInstagram style={{ color: '#C13584' }} />
             </button>
-            <button className="social-icon" onClick={openTelegram} aria-label="Telegram">
+            <button className="header-social-icon" onClick={openTelegram} aria-label="Telegram">
               <FaTelegram style={{ color: '#0088cc' }} />
             </button>
-            <button className="social-icon" onClick={callPhone} aria-label="Позвонить">
+            <button className="header-social-icon" onClick={callPhone} aria-label="Позвонить">
               <FaPhone style={{ color: '#4CAF50' }} />
             </button>
           </div>

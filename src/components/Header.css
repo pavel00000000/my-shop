@@ -1,4 +1,7 @@
-.header {
+/* Header.css */
+
+/* Основной контейнер хедера */
+.header-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,22 +9,22 @@
   background-color: #333333;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Высокий z-index для видимости */
+  z-index: 1000;
   font-family: 'Roboto', sans-serif;
   border-bottom: 1px solid #ffffff;
 }
 
-.logo-link {
+.header-logo-link {
   display: flex;
   align-items: center;
 }
 
-.logo {
+.header-logo {
   height: 40px;
   width: auto;
 }
 
-.nav-container {
+.header-nav-container {
   display: flex;
   flex: 1;
   justify-content: center;
@@ -29,26 +32,26 @@
   position: relative;
 }
 
-.burger-menu {
+.header-burger-menu {
   display: none;
   background: none;
   border: none;
   color: #ffffff;
   font-size: 24px;
   cursor: pointer;
-  z-index: 1001; /* Выше меню */
+  z-index: 1001;
   position: absolute;
   left: 0;
 }
 
-.nav {
+.header-nav {
   display: flex;
   gap: 30px;
   justify-content: center;
   align-items: center;
 }
 
-.nav a {
+.header-nav a {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -58,22 +61,22 @@
   position: relative;
 }
 
-.nav a:hover {
+.header-nav a:hover {
   color: #ffffff;
 }
 
-.nav a .icon {
+.header-nav a .header-icon {
   width: 20px;
   height: 20px;
   margin-right: 8px;
 }
 
-.nav a span {
+.header-nav a span {
   font-size: 16px;
   font-weight: 400;
 }
 
-.cart-indicator {
+.header-cart-indicator {
   position: absolute;
   top: -10px;
   right: -10px;
@@ -89,7 +92,7 @@
   font-weight: bold;
 }
 
-.categories-submenu {
+.header-categories-submenu {
   display: none;
   position: absolute;
   top: 100%;
@@ -99,7 +102,13 @@
   z-index: 998;
 }
 
-.submenu-title {
+/* Показ подменю при наведении на ссылку "Каталог" */
+.header-nav a[href="/catalog"]:hover + .header-categories-submenu,
+.header-categories-submenu:hover {
+  display: block;
+}
+
+.header-submenu-title {
   font-size: 14px;
   color: #aaaaaa;
   padding: 10px;
@@ -107,7 +116,7 @@
   margin-bottom: 5px;
 }
 
-.categories-submenu a {
+.header-categories-submenu a {
   display: block;
   padding: 10px 20px;
   color: #f0f0f0;
@@ -115,22 +124,21 @@
   font-size: 14px;
 }
 
-.categories-submenu a:hover,
-.categories-submenu a.active {
+.header-categories-submenu a:hover,
+.header-categories-submenu a.active {
   background-color: #555555;
   color: #ffffff;
 }
 
-/* Стили для социальных иконок в десктопной версии */
-.social-icons {
+.header-social-icons {
   display: flex;
-  gap: 15px;
+  gap: 50px; /* Увеличено расстояние между иконками */
   position: absolute;
   right: 0;
-  z-index: 999; /* Выше других элементов */
+  z-index: 999;
 }
 
-.social-icon {
+.header-social-icon {
   background: none;
   border: none;
   cursor: pointer;
@@ -138,21 +146,20 @@
   transition: transform 0.3s;
 }
 
-.social-icon:hover {
+.header-social-icon:hover {
   transform: scale(1.2);
 }
 
-/* Стили для социальных иконок в мобильной версии (в бургер-меню) */
-.mobile-social-icons {
+.header-mobile-social-icons {
   display: flex;
   gap: 15px;
   padding: 10px;
   justify-content: center;
   margin-top: 10px;
-  z-index: 1000; /* Выше других элементов */
+  z-index: 1000;
 }
 
-.mobile-social-icon {
+.header-mobile-social-icon {
   background: none;
   border: none;
   cursor: pointer;
@@ -160,51 +167,55 @@
   transition: transform 0.3s;
 }
 
-.mobile-social-icon:hover {
+.header-mobile-social-icon:hover {
   transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
-  .burger-menu {
+  .header-burger-menu {
     display: block;
+    position: absolute;      /* Добавляем абсолютное позиционирование */
+    top: -9px;               /* Отступ сверху (можно подстроить) */
+    left: 140px;            /* Сдвигаем в правый угол */
+    z-index: 1000;           /* Поверх остального */
+    cursor: pointer;         /* Указатель */
   }
 
-  .nav {
+  .header-nav {
     display: none;
   }
 
-  .nav.open {
+  .header-nav.open {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 30px;            /* Сдвигаем меню на 30 пикселей выше */
     left: 0;
     right: 0;
     background-color: #333333;
     padding: 20px;
     z-index: 999;
   }
+  
 
-  .nav.open a {
+  .header-nav.open a {
     padding: 10px;
     border-bottom: 1px solid #444444;
   }
 
-  .nav.open a:last-child {
+  .header-nav.open a:last-child {
     border-bottom: none;
   }
 
-  /* Убрано отображение .categories-submenu в мобильной версии */
-  .nav.open .categories-submenu {
+  .header-nav.open .header-categories-submenu {
     display: none !important;
   }
 
-  /* Скрытие любых подменю на странице корзины */
-  .header .nav[data-page^="/cart"] .categories-submenu,
-  .header .nav.open[data-page^="/cart"] .categories-submenu,
-  .header .nav[data-page^="/cart"] [class*="submenu"],
-  .header .nav.open[data-page^="/cart"] [class*="submenu"],
-  .header .nav.open[data-page^="/cart"] > *:not(a):not(.mobile-social-icons) {
+  .header-header .header-nav[data-page^="/cart"] .header-categories-submenu,
+  .header-header .header-nav.open[data-page^="/cart"] .header-categories-submenu,
+  .header-header .header-nav[data-page^="/cart"] [class*="submenu"],
+  .header-header .header-nav.open[data-page^="/cart"] [class*="submenu"],
+  .header-header .header-nav.open[data-page^="/cart"] > *:not(a):not(.header-mobile-social-icons) {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
@@ -214,24 +225,12 @@
     pointer-events: none !important;
   }
 
-  /* Скрытие Navigation на странице корзины */
-  .header .navigation[data-page^="/cart"],
-  .navigation[data-page^="/cart"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    opacity: 0 !important;
-    position: absolute !important;
-    pointer-events: none !important;
-  }
-
-  .cart-indicator {
+  .header-cart-indicator {
     right: -10px;
   }
 
-  /* Скрытие социальных иконок в шапке в мобильной версии */
-  .social-icons {
+  .header-social-icons {
     display: none;
   }
 }
+
