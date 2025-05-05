@@ -31,19 +31,6 @@ const Layout = () => {
 
   console.log('App.js: location.pathname =', location.pathname, 'isCartPage =', isCartPage);
 
-  // Отключаем прокрутку только на главной странице
-  useEffect(() => {
-    if (location.pathname === '/') {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [location.pathname]);
-
   // Отслеживание просмотров страниц
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
@@ -95,15 +82,16 @@ const Layout = () => {
 
   const { title, description, keywords } = getMetaTags();
 
+  // Структурированные данные для организации
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'My Shop',
     url: 'https://my-shop-7mpy.onrender.com',
-    logo: 'https://my-shop-7mpy.onrender.com/logo.jpg',
+    logo: 'https://my-shop-7mpy.onrender.com/logo.jpg', // Замените на реальный URL логотипа
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+380123456789',
+      telephone: '+380123456789', // Замените на реальный номер
       contactType: 'customer service',
     },
     address: {
@@ -140,6 +128,7 @@ const Layout = () => {
   );
 };
 
+// Основной компонент приложения
 const App = () => (
   <HelmetProvider>
     <Router>

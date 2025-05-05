@@ -85,7 +85,6 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
   const handleSortChange = (e) => {
     console.log('ProductList: Изменение сортировки:', e.target.value);
     setSortOrder(e.target.value);
-    // setCurrentPage(1) теперь обрабатывается через useEffect
   };
 
   // Эффект для плавной прокрутки списка продуктов наверх при смене страницы
@@ -130,8 +129,8 @@ const ProductList = ({ category, productsPerPage = 10 }) => {
       </div>
 
       {/* Пагинация */}
-      {filteredProducts.length > 0 && totalPages > 1 && (
-        <div className="page-nav">
+      {filteredProducts.length > 0 && (
+        <div className="qpage-nav">
           <div className="page-nav-inner">
             <button
               onClick={handlePrevPage}

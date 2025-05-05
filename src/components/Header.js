@@ -54,15 +54,15 @@ const Header = () => {
 
   // Функции для открытия ссылок
   const openInstagram = () => {
-    window.open('https://www.instagram.com/yourprofile', '_blank');
+    window.open('https://www.instagram.com/mix_buket_8?igsh=NWxweHZjNng4bWFl', '_blank');
   };
 
   const openTelegram = () => {
-    window.open('https://t.me/yourprofile', '_blank');
+    window.open('https://t.me/Anna_Mneka', '_blank');
   };
 
   const callPhone = () => {
-    window.location.href = 'tel:+1234567890';
+    window.location.href = 'tel:+380954042969';
   };
 
   return (
