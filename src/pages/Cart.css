@@ -3,7 +3,7 @@ body {
   overflow-x: hidden;
 }
 
-.cart-unique-wrapper {
+.qcart-unique-wrapper {
   max-height: 80vh;
   overflow-y: auto;
   overflow-x: auto;
@@ -135,7 +135,7 @@ body {
   margin: 5px 0;
   font-size: 18px;
   font-weight: bold;
-  color: #c49bbb;
+  color: #000000;
 }
 
 .cart-unique-order-form {
@@ -157,7 +157,7 @@ body {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #ffffff;
+  color: #000000;
 }
 
 .cart-unique-form-group input,
@@ -350,7 +350,7 @@ body {
 }
 
 .cart-unique-modal-content {
-  background: #ffffff;
+  background: #ffffff00;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -364,13 +364,13 @@ body {
 .cart-unique-modal-content h2 {
   margin: 0 0 10px;
   font-size: 24px;
-  color: #333;
+  color: #ffffff;
 }
 
 .cart-unique-modal-content p {
   margin: 0 0 20px;
   font-size: 16px;
-  color: #333;
+  color: #ffffff;
 }
 
 .cart-unique-modal-buttons {
