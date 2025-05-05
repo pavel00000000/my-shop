@@ -4,14 +4,14 @@
 }
 
 /* Контейнер списка товаров */
-.items-grid-container { /* Исправлено: убрана лишняя "i" */
-  width: 100%; /* Полная ширина */
-  margin: 0 auto; /* Центрирование контейнера */
-  padding: 20px; /* Внутренние отступы */
+.items-grid-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование дочерних элементов */
+  align-items: center;
 }
 
 /* Список товаров */
@@ -41,60 +41,60 @@
 /* Пагинация */
 .page-nav {
   display: flex;
-  justify-content: center; /* Центрирование внутреннего контейнера */
-  align-items: center; /* Центрирование по вертикали */
-  background: transparent; /* Прозрачный фон */
+  justify-content: center;
+  align-items: center;
+  background: transparent;
   padding: 3.33px 0;
   box-sizing: border-box;
-  z-index: 1000; /* Убедимся, что пагинация выше других элементов */
-  width: 85%; /* Соответствует ширине контейнера списка товаров */
-  margin-left: 15%; /* Учитываем ширину навигации (15%) */
+  z-index: 1000;
+  width: 85%;
+  margin-left: 15%;
 }
 
 /* Убираем фиксированное положение в веб-версии */
 @media (min-width: 769px) {
   .page-nav {
-    position: static; /* Пагинация следует за контентом */
-    margin: 20px auto; /* Центрирование и отступ */
+    position: static;
+    margin: 20px auto;
   }
 }
 
 .page-nav-inner {
   display: flex;
-  justify-content: center; /* Центрирование кнопок внутри */
-  align-items: center; /* Вертикальное центрирование */
-  gap: 8px; /* Увеличен зазор для более крупных кнопок */
-  max-width: 300px; /* Ограничиваем ширину содержимого */
-  width: 100%; /* Занимает доступное пространство */
-  margin: 0 auto; /* Центрирование внутреннего контейнера */
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .page-nav-button {
-  padding: 8px 12px; /* Увеличены отступы для более крупных кнопок */
-  background: #c49bbb; /* Основной цвет фона */
+  padding: 8px 12px;
+  background: #d1b3c4;
   color: #ffffff;
-  border: 1px solid #a77b9a; /* Добавлена граница для классического вида */
+  border: 1px solid #b38ea4;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s ease; /* Плавный переход для фона и тени */
-  font-size: 14px; /* Увеличен шрифт для читаемости */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для классического стиля */
+  transition: all 0.3s ease;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .page-nav-button:hover:not(:disabled) {
-  background: #a77b9a; /* Более тёмный оттенок при наведении */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Усиленная тень при наведении */
+  background: #b38ea4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
 .page-nav-button:disabled {
-  background: #888888;
-  border-color: #888888;
+  background: #aaaaaa;
+  border-color: #aaaaaa;
   cursor: not-allowed;
-  box-shadow: none; /* Убираем тень для отключённых кнопок */
+  box-shadow: none;
 }
 
 .page-nav span {
-  font-size: 14px; /* Увеличен шрифт для согласованности */
+  font-size: 14px;
   color: #333;
   font-weight: bold;
 }
@@ -125,7 +125,7 @@
 
 .sort-panel select {
   padding: 8px;
-  border: 1px solid #c49bbb;
+  border: 1px solid #d1b3c4;
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
@@ -135,19 +135,19 @@
 
 .sort-panel select:focus {
   outline: none;
-  border-color: #a77b9a;
+  border-color: #b38ea4;
 }
 
 /* Адаптивный дизайн для планшетов и телефонов */
 @media (max-width: 768px) {
-  .items-grid-container { /* Исправлено: убрана лишняя "i" */
+  .items-grid-container {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: auto; /* Прокрутка всего контейнера */
+    overflow-y: auto;
   }
 
   .items-grid {
@@ -155,50 +155,64 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 18px;
-    padding-bottom: 100px; /* Отступ для фиксированной пагинации */
+    padding-bottom: 100px;
   }
 
-  .page-nav {
-    position: fixed; /* Фиксируем пагинацию внизу */
+  .qpage-nav {
+    position: fixed;
     bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px 0;
-    background: transparent; /* Прозрачный фон */
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; /* Для центрирования содержимого, если нужно */
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 9999; /* Чтобы быть поверх всех элементов */
   }
+  
+  
 
   .page-nav-inner {
     display: flex;
-    justify-content: space-between; /* Кнопки по краям, текст в центре */
+    justify-content: center;
     align-items: center;
-    gap: 6px;
-    max-width: 95%; /* Увеличено для лучшего распределения */
-    width: 100%; /* Занимает всю доступную ширину */
-    margin: 0 auto;
+    gap: 10px;
+    width: auto; /* Подстраиваемся под содержимое */
   }
 
   .page-nav-button {
-    padding: 6px 10px;
-    font-size: 12px;
-    border: 1px solid #a77b9a;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-width: 80px; /* Минимальная ширина для кнопок */
-    text-align: center; /* Центрирование текста в кнопках */
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #b38ea4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    min-width: 100px;
+    text-align: center;
+    background: #d1b3c4;
+    color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .page-nav-button:hover:not(:disabled) {
-    background: #a77b9a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #b38ea4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .page-nav-button:disabled {
+    background: #aaaaaa;
+    border-color: #aaaaaa;
+    cursor: not-allowed;
+    box-shadow: none;
   }
 
   .page-nav span {
-    font-size: 12px;
-    flex: 1; /* Занимает оставшееся пространство */
-    text-align: center; /* Центрирование текста */
-    display: flex;
-    justify-content: center; /* Дополнительное центрирование */
-    align-items: center;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
   }
 
   .sort-panel {
@@ -206,7 +220,7 @@
     gap: 8px;
     width: 100%;
     max-width: 300px;
-    margin: 0 auto; /* Центрирование блока сортировки */
+    margin: 0 auto;
   }
 
   .sort-panel select {
@@ -216,56 +230,68 @@
 
 /* Для маленьких экранов (телефоны) */
 @media (max-width: 480px) {
-  .items-grid-container { /* Исправлено: убрана лишняя "i" */
+  .items-grid-container {
     padding: 8px;
   }
 
   .items-grid {
     padding: 0 10px;
-    padding-bottom: 120px; /* Больший отступ для пагинации */
+    padding-bottom: 120px;
   }
 
   .page-nav {
-    position: fixed; /* Фиксируем пагинацию внизу */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px 0;
-    background: transparent; /* Прозрачный фон */
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
+    position: fixed;
+    bottom: 10px; /* Поднимаем немного выше от нижнего края */
+    left: 50%;
+    transform: translateX(-50%); /* Исправлено для точного центрирования */
+    width: auto;
+    max-width: 95%;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.95); /* Чуть более плотный фон */
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
   }
 
   .page-nav-inner {
     display: flex;
-    justify-content: space-between; /* Кнопки по краям, текст в центре */
+    justify-content: center;
     align-items: center;
-    gap: 5px;
-    max-width: 98%; /* Ещё больше для маленьких экранов */
-    width: 100%;
-    margin: 0 auto;
+    gap: 8px;
+    width: auto;
   }
 
   .page-nav-button {
-    padding: 5px 8px;
-    font-size: 11px;
-    border: 1px solid #a77b9a;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-width: 70px; /* Чуть меньше для маленьких экранов */
+    padding: 10px 20px; /* Увеличенные отступы */
+    font-size: 15px;
+    border: 1px solid #c4a8bc;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    min-width: 110px; /* Увеличенная ширина */
     text-align: center;
+    background: #e6d1e0; /* Мягкий пастельный цвет */
+    color: #333; /* Тёмный текст для контраста */
+    border-radius: 6px; /* Более скруглённые углы */
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .page-nav-button:hover:not(:disabled) {
-    background: #a77b9a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #c4a8bc;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px); /* Лёгкий подъём при наведении */
+  }
+
+  .page-nav-button:disabled {
+    background: #cccccc;
+    border-color: #cccccc;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
   }
 
   .page-nav span {
-    font-size: 11px;
-    flex: 1; /* Занимает оставшееся пространство */
-    text-align: center; /* Центрирование текста */
-    display: flex;
-    justify-content: center; /* Дополнительное центрирование */
-    align-items: center;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
   }
 
   .sort-panel label {

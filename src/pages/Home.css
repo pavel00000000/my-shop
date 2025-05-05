@@ -31,7 +31,6 @@
   overflow: visible;             /* Разрешаем выход вложенного контента */
 }
 
-
 /* Обертка содержимого */
 .home-content-wrapper {
   position: relative;            /* Относительное позиционирование */
@@ -42,17 +41,17 @@
   z-index: 1;                    /* Размещаем выше фона */
 }
 
-/* Левая половина (текст) */
 .home-left-half {
-  width: 70vw; /* Половина ширины */
-  display: flex; /* Flex для центрирования содержимого */
-  justify-content: center; /* Центр по горизонтали */
-  align-items: center; /* Центр по вертикали */
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem; /* Добавьте эту строку или увеличьте значение */
 }
 
 /* Правая половина (изображение) */
 .home-right-half {
-  width: 50vw; /* Вторая половина ширины */
+  width: 100vw; /* Вторая половина ширины */
   display: flex; /* Flex-контейнер */
   justify-content: center; /* Центрирование по горизонтали */
   align-items: center; /* Центрирование по вертикали */
@@ -75,11 +74,11 @@
   z-index: 2; /* Поверх других элементов */
 }
 
-/* Стили статьи */
+/* Основной текст */
 .home-home-container .home-article {
   position: relative; /* Относительное позиционирование */
   width: 18ch; /* Ширина в символах */
-  font: bold 7vmin/1.2 system-ui; /* Шрифт: жирный, размер 2vmin, межстрочный интервал */
+  font: bold 12vmin/1.2 system-ui; /* Увеличенный размер шрифта (12vmin вместо 10vmin) */
   color: #ffb5f0; /* Цвет текста */
   text-rendering: optimizeLegibility; /* Улучшенная читаемость */
   margin-bottom: 4vmin; /* Отступ снизу */
@@ -88,7 +87,7 @@
 
 /* Заголовок статьи */
 .home-home-container .home-article > h2 {
-  font-size: 20vmin; /* Большой адаптивный размер */
+  font-size: 50vmin; /* Увеличиваем размер заголовка (50vmin вместо 40vmin) */
   margin: 0; /* Убираем отступ */
   line-height: 1.2; /* Межстрочный интервал */
 }
@@ -322,9 +321,9 @@
   }
 
   .home-image-container {
-    width: 80%;
-    max-width: 100vw;
-    max-height: 80vh;
+    width: 90%; /* Увеличиваем ширину контейнера картинки */
+    max-width: none; /* Убираем ограничение по максимальной ширине */
+    max-height: none; /* Убираем ограничение по максимальной высоте */
   }
 
   .home-main {
@@ -333,13 +332,13 @@
   }
 
   .home-home-container .home-article {
-    font: bold 2vmin/1.2 system-ui;
+    font: bold 3vmin/1.2 system-ui; /* Увеличиваем размер шрифта текста */
     width: 18ch;
     text-align: left;
   }
 
   .home-home-container .home-article > h2 {
-    font-size: 10vmin;
+    font-size: 12vmin; /* Увеличиваем размер заголовка */
     text-align: left;
   }
 
