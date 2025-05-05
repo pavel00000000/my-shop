@@ -6,15 +6,12 @@ body {
 .cart-unique-wrapper {
   max-height: 80vh;
   overflow-y: auto;
-  overflow-x: auto; /* Добавлено */
-  margin: 10px 0;
-  width: 2000px; /* Увеличена ширина */
-  max-width: none; /* Убрано ограничение */
+  overflow-x: auto;
+  margin: 10px auto; /* Центрирование по горизонтали + вертикальный отступ */
+  width: 2000px;
+  max-width: none;
   box-sizing: border-box;
   position: relative;
-  /* Удалено центрирование, чтобы не мешало растяжению */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
   scrollbar-width: thin;
   scrollbar-color: #c49bbb #f0f0f0;
 }
